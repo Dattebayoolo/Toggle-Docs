@@ -480,11 +480,14 @@ export function setupScratchpad() {
   const btnSaveAsDoc = document.getElementById('btn-scratchpad-save-doc');
   const btnClear = document.getElementById('btn-scratchpad-clear');
   const btnCopy = document.getElementById('btn-scratchpad-copy');
+  const scratchpadStorage = getScratchpadStorage();
 
   if (pad) {
-    pad.value = localStorage.getItem('toggle-docs-scratchpad') || '';
+    pad.value = scratchpadStorage ? (scratchpadStorage.getItem('toggle-docs-scratchpad') || '') : '';
     pad.addEventListener('input', () => {
-      localStorage.setItem('toggle-docs-scratchpad', pad.value);
+      if (scratchpadStorage) {
+        scratchpadStorage.setItem('toggle-docs-scratchpad', pad.value);
+      }
     });
   }
 
@@ -509,7 +512,9 @@ export function setupScratchpad() {
   if (btnClear && pad) {
     btnClear.addEventListener('click', () => {
       pad.value = '';
-      localStorage.removeItem('toggle-docs-scratchpad');
+      if (scratchpadStorage) {
+        scratchpadStorage.removeItem('toggle-docs-scratchpad');
+      }
       showToast('Scratchpad cleared');
     });
   }
@@ -521,6 +526,14 @@ export function setupScratchpad() {
         showToast('Copied to clipboard');
       });
     });
+  }
+}
+
+function getScratchpadStorage() {
+  try {
+    return typeof localStorage !== 'undefined' ? localStorage : null;
+  } catch (e) {
+    return null;
   }
 }
 

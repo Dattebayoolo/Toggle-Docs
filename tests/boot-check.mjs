@@ -5,6 +5,7 @@ const listeners = new Map();
 function makeEl(id) {
   const el = {
     id,
+    dataset: {},
     classList: {
       _set: new Set(),
       add(c) { this._set.add(c); }, remove(c) { this._set.delete(c); },
@@ -21,8 +22,8 @@ function makeEl(id) {
     removeAttribute(k) { if (this._attrs) delete this._attrs[k]; },
     hasAttribute(k) { return !!(this._attrs && this._attrs[k] !== undefined); },
     querySelector(){ return null; }, querySelectorAll(){ return []; },
-    appendChild(){}, removeChild(){}, focus(){},
-    textContent: '', innerHTML: '', innerText: '', value: '', style: {}, title: ''
+    appendChild(){}, removeChild(){}, focus(){}, select(){},
+    textContent: '', innerHTML: '', innerText: '', value: '', style: {}, title: '', checked: false
   };
   return el;
 }
@@ -47,6 +48,16 @@ global.removeEventListener = function(){};
 global.addEventListener = function(){};
 global.removeEventListener = function(){};
 Object.defineProperty(global, 'navigator', { value: { serviceWorker: undefined }, configurable: true });
+const storage = new Map();
+global.localStorage = {
+  getItem(key) { return storage.has(key) ? storage.get(key) : null; },
+  setItem(key, value) { storage.set(key, String(value)); },
+  removeItem(key) { storage.delete(key); },
+  clear() { storage.clear(); }
+};
+global.navigator.clipboard = {
+  writeText() { return Promise.resolve(); }
+};
 global.matchMedia = () => ({ matches: false, addEventListener(){}, addListener(){} });
 global.indexedDB = {
   open() {

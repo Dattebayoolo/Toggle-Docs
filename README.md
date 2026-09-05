@@ -36,8 +36,8 @@ Most editors want your data in *their* cloud. Toggle Docs flips that: it is a **
 git clone https://github.com/Dattebayoolo/Toggle-Docs.git
 cd Toggle-Docs
 
-# 2. Serve it (ES modules require HTTP — no build step needed!)
-node tests/server.js
+# 2. Start the local dev server
+npm run dev
 
 # 3. Open in your browser
 #    → http://localhost:8765
@@ -46,7 +46,7 @@ node tests/server.js
 > [!IMPORTANT]
 > Opening `index.html` directly via `file://` will **not** work — browsers block ES modules on `file://` origins. Always serve over HTTP.
 
-That's it. There is **no build, no bundler, no npm install**. It's just the web.
+That's it. There is **no build, no bundler, and no dependencies to install**. The npm script just wraps the included Node static server.
 
 ## 🧭 Features
 
@@ -131,10 +131,10 @@ Toggle-Docs/
 
 ```bash
 # Start the dev server
-node tests/server.js
+npm run dev
 
 # Run the boot smoke test (boots the whole module graph + simulates clicks)
-node tests/boot-check.mjs
+npm test
 ```
 
 The app is split into small ES modules with a single shared `state` object — every module mutates the same source of truth.

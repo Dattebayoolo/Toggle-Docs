@@ -215,15 +215,59 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-  [data-theme="dark"] .lp-btn-cta-nav {
-    background: linear-gradient(135deg, #34d375 0%, #15803d 100%);
-    color: #003916;
-    box-shadow: 0 3px 14px rgba(52, 211, 117, 0.28);
+  .lp-btn-ring {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: transparent;
+    color: #f7fff9;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28), 0 0 34px rgba(255, 90, 150, 0.18), 0 0 40px rgba(56, 189, 248, 0.12);
   }
 
-  .lp-btn-cta-nav:hover {
+  .lp-btn-ring::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background:
+      conic-gradient(
+        from 0deg,
+        #ff4d6d 0deg,
+        #ff9f1c 55deg,
+        #ffe66d 110deg,
+        #38d39f 165deg,
+        #38bdf8 220deg,
+        #7c3aed 285deg,
+        #ff4d6d 360deg
+      );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    filter: drop-shadow(0 0 10px rgba(255, 104, 145, 0.35)) drop-shadow(0 0 14px rgba(56, 189, 248, 0.28));
+    animation: lpRingSpin 2.4s linear infinite;
+    z-index: -2;
+  }
+
+  .lp-btn-ring::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    background: linear-gradient(180deg, #111111 0%, #050505 100%);
+    z-index: -1;
+  }
+
+  .lp-btn-ring > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .lp-btn-cta-nav.lp-btn-ring:hover {
     transform: translateY(-1px);
-    box-shadow: 0 5px 16px rgba(14, 122, 61, 0.4);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.34), 0 0 40px rgba(255, 90, 150, 0.24), 0 0 46px rgba(56, 189, 248, 0.18);
   }
 
   /* ----------------------------------------------------
@@ -353,15 +397,14 @@
     transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
   }
 
-  [data-theme="dark"] .lp-btn-hero-primary {
-    background: linear-gradient(135deg, #34d375 0%, #15803d 100%);
-    color: #00280f;
-    box-shadow: 0 6px 22px rgba(52, 211, 117, 0.35);
+  .lp-btn-hero-primary.lp-btn-ring:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.34), 0 0 42px rgba(255, 90, 150, 0.24), 0 0 50px rgba(56, 189, 248, 0.2);
   }
 
-  .lp-btn-hero-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(14, 122, 61, 0.45);
+  @keyframes lpRingSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
   .lp-btn-hero-secondary {
@@ -1067,22 +1110,22 @@
     flex: 1;
     min-width: 24px;
     height: 38px;
-    background: #ffffff;
-    color: #12301c;
+    background: #101010;
+    color: #ffffff;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Noto Nastaliq Urdu', serif;
     font-size: 16px;
-    box-shadow: 0 2px 0 #93a899;
+    box-shadow: 0 2px 0 #000000;
     user-select: none;
     cursor: pointer;
     transition: transform 0.08s ease, background 0.1s ease;
   }
 
   .lp-key:hover {
-    background: #e8f5ec;
+    background: #1c1c1c;
   }
 
   .lp-key:active {
@@ -1095,9 +1138,9 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 12px;
     font-weight: 600;
-    background: rgba(255, 255, 255, 0.22);
+    background: #101010;
     color: #ffffff;
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 0 #000000;
   }
 
   .lp-key-space {
@@ -1437,7 +1480,6 @@
           <span class="lp-brand-text">
             Toggle<span class="doc-word">Docs</span>
           </span>
-          <span class="lp-nav-pill-pk">Pakistan</span>
         </a>
 
         <div class="lp-nav-menu">
@@ -1460,7 +1502,7 @@
             </svg>
           </button>
           
-          <a class="lp-btn-cta-nav" href="index.html">
+          <a class="lp-btn-cta-nav lp-btn-ring" href="index.html">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
             </svg>
@@ -1497,7 +1539,7 @@
         </p>
 
         <div class="lp-hero-cta-group">
-          <a class="lp-btn-hero-primary" href="index.html">
+          <a class="lp-btn-hero-primary lp-btn-ring" href="index.html">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 5v14"/><path d="M5 12h14"/>
             </svg>
@@ -1532,28 +1574,6 @@
            HERO MOCKUP SHOWCASE
            ==================================================== -->
       <div class="lp-mockup-wrapper">
-        <!-- Floating badge left -->
-        <div class="lp-floating-badge lp-float-left">
-          <div style="width: 28px; height: 28px; border-radius: 8px; background: #d0ebd7; color: #01411C; display: flex; align-items: center; justify-content: center;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          </div>
-          <div>
-            <div style="font-size: 11px; color: var(--outline);">PRIVACY ENGINE</div>
-            <div>0 Bytes Cloud Transfer</div>
-          </div>
-        </div>
-
-        <!-- Floating badge right -->
-        <div class="lp-floating-badge lp-float-right">
-          <div style="width: 28px; height: 28px; border-radius: 8px; background: #eedbfa; color: #6b21a8; display: flex; align-items: center; justify-content: center;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          </div>
-          <div>
-            <div style="font-size: 11px; color: var(--outline);">NASTALIQ ENGINE</div>
-            <div>Urdu Phonetic Mode Active</div>
-          </div>
-        </div>
-
         <!-- Main Window Mockup -->
         <div class="lp-mockup-container">
           <!-- Chrome Bar -->
@@ -1811,8 +1831,7 @@
             </div>
 
             <a class="lp-btn-hero-primary" href="index.html" style="background: #ffffff; color: #01411C;">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              <span>Toggle Docs کھولیں اور لکھیں</span>
+              <span>کھولیں اور لکھیں</span>
             </a>
           </div>
 
@@ -2148,7 +2167,7 @@
         <p>No sign-up. No credit card. No waiting. Open the app and begin creating your documents immediately.</p>
         
         <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-          <a class="lp-btn-hero-primary" href="index.html">
+          <a class="lp-btn-hero-primary lp-btn-ring" href="index.html">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
             </svg>
@@ -2197,6 +2216,7 @@
       <div class="lp-footer-bottom">
         <div>
           <span>Crafted with pride in Pakistan 🇵🇰 · Local-First, Sovereign &amp; Free</span>
+          <span style="display:block; margin-top:4px;">A product of Toggle Inc</span>
         </div>
         <div class="lp-footer-badge-offline">
           <span></span>

@@ -1,0 +1,13 @@
+{
+  "name": "toggle-docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first document suite with a zero-dependency local dev server.",
+  "scripts": {
+    "dev": "node tests/server.js",
+    "start": "node tests/server.js",
+    "test": "node tests/boot-check.mjs",
+    "smoke": "powershell -ExecutionPolicy Bypass -File tests/smoke.ps1"
+  }
+}
