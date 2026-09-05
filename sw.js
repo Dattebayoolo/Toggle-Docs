@@ -1,5 +1,5 @@
 /* Toggle Docs — offline service worker (only active when served over http/localhost) */
-const CACHE = 'toggle-docs-v5';
+const CACHE = 'toggle-docs-v11';
 const ASSETS = [
   './',
   './index.html',
@@ -18,6 +18,7 @@ const ASSETS = [
   './js/dashboard.js',
   './js/editor-events.js',
   './js/settings.js',
+  './js/collab.js',
   './js/app.js'
 ];
 
@@ -55,5 +56,10 @@ self.addEventListener('fetch', function (e) {
     })
   );
 });
+
+
+
+
+
 
 

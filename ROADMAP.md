@@ -46,6 +46,8 @@
 - Dark/light theme, EN/اردو UI language — persisted in IndexedDB
 - Keyboard shortcuts (Ctrl+S, Ctrl+Alt+N, Alt+H, Ctrl+\, Alt+U, Ctrl+Shift+R, Ctrl+P, F2)
 - PWA installable, offline via service worker
+- Google-style **account dropdown** under the header avatar (both dashboard & editor views) with Manage account / Add account / Sign out actions — local-first toasts
+- **Collaborative workspace** (`js/collab.js`): Google Docs-style Share modal (invite people with Viewer/Commenter/Editor roles, general access, copy workspace link `#doc=<id>`), share state persisted per document in IndexedDB, and live multi-window sync via `BroadcastChannel` (edits, title & share changes propagate between open windows) plus **live presence avatar stack** in the editor header (colored initials chips for everyone currently viewing the document, heartbeat-based with auto-prune)
 
 ---
 
@@ -77,10 +79,12 @@
 - Phonetic transliteration (type "salam" → سلام) alongside the on-screen keyboard.
 - Offline Urdu spell-check hints; more bilingual templates (applications, invoices).
 
-### 6. Engineering hygiene — 🟡 partially done (wave 1)
+### 6. Engineering hygiene — ✅ mostly done (wave 2)
 - ✅ `tests/smoke.ps1`: headless-Chrome smoke test (asserts zero console errors + dashboard render). Run: `powershell -NoProfile -ExecutionPolicy Bypass -File tests/smoke.ps1`.
-- ✅ `README.md`: project structure, module contract, run & test instructions.
-- Still open: JSDoc headers; ES-module migration; "new version available" SW toast; CSS logical-property cleanup.
+- ✅ `README.md`: fully modernized (wave 2) — SVG badge hero, feature breakdown, tech-stack badges, annotated project tree, dev/test docs, roadmap links. MIT `LICENSE` added.
+- ✅ **ES-module migration complete** (wave 2): all 9 modules are real ES modules with explicit imports/exports; `index.html` loads only `<script type="module" src="js/app.js">`; the global-scope contract is gone. Requires serving over HTTP (enforced in docs; `file://` is blocked by browsers for module scripts).
+- ✅ `tests/boot-check.mjs` (wave 2): zero-dependency Node harness with a DOM/IndexedDB shim that boots the entire module graph and **simulates real clicks** (theme toggle, drawer, Escape key). Run: `node tests/boot-check.mjs`.
+- Still open: JSDoc headers; "new version available" SW toast; CSS logical-property cleanup.
 
 ### Suggested 2.0 milestone order
 1. CSS split + theming cleanup (prerequisite for everything visual)
@@ -150,7 +154,7 @@ field in the documents store; schema migration v2).
 | Item | Details | Priority |
 |---|---|---|
 | Build system | Vite build: bundling, minification, hashing, source maps; single `dist/` output replaces raw script tags. | P0 |
-| ES modules migration | `type="module"` + proper imports, eliminating the global-scope contract (requires dropping legacy browsers). | P0 |
+| ES modules migration | ✅ **DONE (wave 2)** — app is fully ES modules; dropped the global-scope contract and legacy `file://` loading. | ~~P0~~ ✅ |
 | TypeScript | Incremental: JSDoc types first, then `.ts` per module. | P1 |
 | Test suite | Playwright e2e (replace smoke.ps1): boot, editor ops, save/versioning, sync merge tests; GitHub Actions CI. | P0 |
 | Packaging | Desktop shells: Tauri (small) for Windows/Linux/macOS; Capacitor for Android with share-intent "open in Toggle Docs". | P1 |
@@ -195,11 +199,36 @@ migration introduced in M2. M5–M7 fill in after the big three.
 - **Scope creep across 4 apps** — Sheets/Slides/Forms are MVPs with hard caps; ship notes first (smallest).
 - **File:// legacy users** — after ES-module migration, keep a frozen 2.x "legacy" build downloadable.
 
-*Status: v3.0 planned September 2026 — not started. v2.0 wave 1 shipped.*
+*Status: v3.0 planned September 2026 — not started. v2.0 wave 2 shipped.*
 
 ---
 
-*Last updated: September 2026 — v1.x hardening & modularization complete.*
+## 🛠️ Wave 2 — ES modules, hardening & UX (current cycle)
+
+### Bugs fixed
+
+1. **Boot crash that killed ALL event wiring (missing import)**:
+   - `app.js` called `setupDashboardEvents()` without importing it → `ReferenceError` in `initApp()` → no listeners ever attached (dark-mode toggle, hamburger drawer, everything dead at runtime).
+   - Fix: added the missing import from `dashboard.js`. Found via a new Node boot harness (not visible to `node --check`), verified by click-simulation smoke test.
+
+2. **Corrupted CSS header comments in every stylesheet**:
+   - All 5 files in `css/` had lost the `/*` opener on their header comments (plus dangling unclosed `/*` at EOF), so the CSS parser swallowed following rules as one invalid rule — breaking base styles and layout.
+   - Fix: rebuilt headers, removed EOF danglers, verified open/close balance across all files.
+
+3. **Stale service-worker cache masking fixes**:
+   - The cache-first SW kept serving broken assets after code changes.
+   - Fix: cache version bumped `v3 → v5`; hard-refresh guidance documented.
+
+### Shipped
+
+- **Full ES-module migration** (see Engineering hygiene above) — `file://` no longer works; HTTP serving required (`node tests/server.js`).
+- **Google-style account dropdown** on both views (HTML + `overlays.css` + 3 new `handleMenuAction` cases).
+- **`tests/boot-check.mjs`** — DOM/IndexedDB-shim boot & interaction smoke test.
+- **Modern README** with SVG badges + MIT `LICENSE`.
+
+---
+
+**Also in wave 1:**
 
 4. **Logo wordmark typography**:
    - `.dash-logo-text` upgraded to the already-loaded **Outfit** face (500/700), tighter tracking, gradient-filled "Docs" via `background-clip: text`.
@@ -213,3 +242,6 @@ migration introduced in M2. M5–M7 fill in after the big three.
    - `showToast`/`escapeHtml` were dropped from `state.js` during extraction → `window.TDApp` export threw at load → `initApp()` never ran → all event wiring dead.
    - Restored helpers; removed duplicate `createInitialWelcomeDoc`/`loadDocuments` from `documents.js`.
    - Verified with headless Chrome: zero console errors, dashboard renders, theme buttons wired.
+
+*Last updated: September 2026 — v2.0 wave 2 (ES modules, hardening, account dropdown) complete.*
+

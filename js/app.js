@@ -8,6 +8,7 @@ import { showDashboard, setupDashboardEvents, updateDocCounts } from './dashboar
 import { setupEditorEvents, setupDropdowns, setupShortcuts } from './editor-events.js';
 import { setupModals, createDocObject } from './documents.js';
 import { loadSettings } from './settings.js';
+import { initCollab, setupShareEvents } from './collab.js';
 
 async function initApp() {
   try {
@@ -21,7 +22,9 @@ async function initApp() {
   setupEditorEvents();
   setupDropdowns();
   setupModals();
+  setupShareEvents();
   setupShortcuts();
+  initCollab();
 
   await loadDocuments();
 

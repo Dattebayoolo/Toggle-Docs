@@ -52,6 +52,7 @@ export function openDocument(id) {
 
   setSaveStatus('saved');
   highlightActiveDocInList(doc.id);
+  document.dispatchEvent(new CustomEvent('td:doc-opened'));
 }
 
 export function updateStarButtonVisual(btn, isStarred) {
