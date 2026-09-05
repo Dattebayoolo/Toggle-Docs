@@ -7,8 +7,11 @@ import { DB } from './db.js';
 import { showDashboard, setupDashboardEvents, updateDocCounts } from './dashboard.js';
 import { setupEditorEvents, setupDropdowns, setupShortcuts } from './editor-events.js';
 import { setupModals, createDocObject } from './documents.js';
-import { loadSettings } from './settings.js';
+import { loadSettings, initSettingsModal } from './settings.js';
 import { initCollab, setupShareEvents } from './collab.js';
+import { initCommandPalette } from './command-palette.js';
+import { initFindReplace } from './find-replace.js';
+import { initTableControls } from './tables.js';
 
 async function initApp() {
   try {
@@ -25,6 +28,10 @@ async function initApp() {
   setupShareEvents();
   setupShortcuts();
   initCollab();
+  initCommandPalette();
+  initFindReplace();
+  initTableControls();
+  initSettingsModal();
 
   await loadDocuments();
 

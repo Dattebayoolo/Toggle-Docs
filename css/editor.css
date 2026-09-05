@@ -2050,6 +2050,201 @@ html[data-lang="ur"] .doc-item-title {
   gap: 6px;
 
   font-weight: 500;
+}
+
+
+
+.font-serif,
+
+.gdocs-editor[data-font="serif"] {
+
+  font-family: Georgia, 'Times New Roman', serif;
+
+}
+
+
+
+.font-mono,
+
+.gdocs-editor[data-font="mono"] {
+
+  font-family: var(--font-mono);
+
+  font-size: 10.5pt;
+
+}
+
+
+
+[dir="rtl"] {
+
+  direction: rtl;
+
+  text-align: right;
+
+}
+
+
+
+[dir="rtl"] .gdocs-editor blockquote {
+
+  border-radius: var(--radius-xs) 0 0 var(--radius-xs);
+
+}
+
+
+
+/* --------------------------------------------------------------------------
+
+   Urdu UI mode — app chrome stays LTR; only translated text runs are RTL so
+
+   labels/toasts read naturally without mirroring the layout.
+
+   -------------------------------------------------------------------------- */
+
+html[data-lang="ur"] [data-i18n] {
+
+  direction: rtl;
+
+  unicode-bidi: isolate;
+
+}
+
+
+
+html[data-lang="ur"] .toast,
+
+html[data-lang="ur"] .gdocs-toast {
+
+  direction: rtl;
+
+}
+
+
+
+html[data-lang="ur"] .dash-drawer-item,
+
+html[data-lang="ur"] .gdocs-menu-item,
+
+html[data-lang="ur"] .dash-card-title,
+
+html[data-lang="ur"] .doc-item-title {
+
+  direction: rtl;
+
+  unicode-bidi: isolate;
+
+}
+
+
+
+/* Status Bar */
+
+.gdocs-statusbar {
+
+  height: var(--statusbar-height);
+
+  background: var(--surface);
+
+  border-top: 1px solid var(--border);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 16px;
+
+  font-family: var(--font-ui);
+
+  font-size: 11.5px;
+
+  color: var(--outline);
+
+  flex-shrink: 0;
+
+  z-index: 25;
+
+}
+
+
+
+.status-group {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+}
+
+
+
+.status-item strong {
+
+  color: var(--on-surface);
+
+  font-weight: 500;
+
+}
+
+
+
+.status-sep {
+
+  color: var(--border);
+
+}
+
+
+
+.status-btn {
+
+  background: var(--surface-container);
+
+  border-radius: var(--radius-full);
+
+  padding: 2px 10px;
+
+  font-family: var(--font-nastaliq);
+
+  font-size: 11.5px;
+
+  font-weight: 600;
+
+  color: var(--primary);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+}
+
+
+
+.status-btn:hover {
+
+  background: var(--primary-container);
+
+  color: var(--on-primary-container);
+
+}
+
+
+
+.status-badge {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  font-weight: 500;
 
 }
 
@@ -2065,4 +2260,84 @@ html[data-lang="ur"] .doc-item-title {
 
   background: var(--primary);
 
+}
+
+/* ==========================================================================
+   v3.0: GDOCS TABLE STYLES (inserted by Insert > Table)
+   ========================================================================== */
+.gdocs-editor table.gdocs-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 12px 0;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  table-layout: auto;
+}
+
+.gdocs-editor table.gdocs-table th,
+.gdocs-editor table.gdocs-table td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  min-width: 60px;
+  vertical-align: top;
+  word-break: break-word;
+}
+
+.gdocs-editor table.gdocs-table th {
+  background: var(--surface-container-low);
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--on-surface);
+  text-align: left;
+}
+
+.gdocs-editor table.gdocs-table td p,
+.gdocs-editor table.gdocs-table th p {
+  margin: 0;
+  padding: 0;
+}
+
+.gdocs-editor table.gdocs-table tr:nth-child(even) td {
+  background: var(--surface-container-low);
+}
+
+.gdocs-editor table.gdocs-table tr:hover td {
+  background: var(--primary-container);
+  transition: background 0.12s ease;
+}
+
+[data-theme="dark"] .gdocs-editor table.gdocs-table th {
+  background: var(--surface-container);
+}
+
+/* ==========================================================================
+   v3.0: INLINE IMAGE EMBED (figure + figcaption)
+   ========================================================================== */
+.gdocs-editor figure.gdocs-image-wrap {
+  display: block;
+  margin: 14px auto;
+  text-align: center;
+  max-width: 100%;
+}
+
+.gdocs-editor figure.gdocs-image-wrap img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  display: block;
+  margin: 0 auto;
+}
+
+.gdocs-editor figure.gdocs-image-wrap figcaption {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--outline);
+  margin-top: 6px;
+  font-style: italic;
+  text-align: center;
 }

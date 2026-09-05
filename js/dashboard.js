@@ -1,11 +1,12 @@
-import { showToast, ICONS } from './state.js';
+import { showToast, escapeHtml, ICONS } from './state.js';
 import { toggleSidebar } from './editor-events.js';
-import { toggleLanguage, toggleTheme } from './settings.js';
+import { toggleLanguage, toggleTheme, openSettingsModal } from './settings.js';
 import { DB } from './db.js';
-import { backupAllDocuments, createDocumentFromTemplate, openContextMenu, openDocument, saveCurrentDoc, updateStarButtonVisual } from './documents.js';
+import { backupAllDocuments, createDocumentFromTemplate, createDocObject, openContextMenu, openDocument, saveCurrentDoc, updateStarButtonVisual } from './documents.js';
 import { I18N } from './urdu.js';
 import { state } from './state.js';
 import { Editor } from './editor.js';
+import { openCommandPalette } from './command-palette.js';
 
 /* ==========================================================================
    Toggle Docs - Dashboard & View Switching Module
@@ -445,12 +446,82 @@ export function setupDashboardEvents() {
     });
   }
 
+  // Drawer Settings Action
+  const drawerSettings = document.getElementById('dash-drawer-settings');
+  if (drawerSettings) {
+    drawerSettings.addEventListener('click', () => {
+      toggleDashboardDrawer(false);
+      openSettingsModal();
+    });
+  }
+
+  // Dashboard Command Palette Trigger (Search Pill)
+  const dashPaletteTrigger = document.getElementById('dash-search-shortcut-pill');
+  if (dashPaletteTrigger) {
+    dashPaletteTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openCommandPalette();
+    });
+  }
+
+  // Setup Quick Notes Scratchpad
+  setupScratchpad();
+
   // Escape key closes drawer
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       toggleDashboardDrawer(false);
     }
   });
+}
+
+export function setupScratchpad() {
+  const pad = document.getElementById('dash-scratchpad-input');
+  const btnSaveAsDoc = document.getElementById('btn-scratchpad-save-doc');
+  const btnClear = document.getElementById('btn-scratchpad-clear');
+  const btnCopy = document.getElementById('btn-scratchpad-copy');
+
+  if (pad) {
+    pad.value = localStorage.getItem('toggle-docs-scratchpad') || '';
+    pad.addEventListener('input', () => {
+      localStorage.setItem('toggle-docs-scratchpad', pad.value);
+    });
+  }
+
+  if (btnSaveAsDoc && pad) {
+    btnSaveAsDoc.addEventListener('click', async () => {
+      const text = pad.value.trim();
+      if (!text) {
+        showToast('Scratchpad is empty');
+        return;
+      }
+      const lines = text.split('\n');
+      const title = lines[0].substring(0, 40) || 'Quick Note';
+      const content = `<p>${lines.map(l => escapeHtml(l)).join('</p><p>')}</p>`;
+      const doc = createDocObject(title, content);
+      await DB.putDocument(doc);
+      state.allDocs.unshift(doc);
+      showToast('Saved as document!');
+      showEditor(doc.id);
+    });
+  }
+
+  if (btnClear && pad) {
+    btnClear.addEventListener('click', () => {
+      pad.value = '';
+      localStorage.removeItem('toggle-docs-scratchpad');
+      showToast('Scratchpad cleared');
+    });
+  }
+
+  if (btnCopy && pad) {
+    btnCopy.addEventListener('click', () => {
+      if (!pad.value) return;
+      navigator.clipboard.writeText(pad.value).then(() => {
+        showToast('Copied to clipboard');
+      });
+    });
+  }
 }
 
 export function toggleDashboardDrawer(forceOpen) {

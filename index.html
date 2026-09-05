@@ -82,6 +82,11 @@
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <span class="drawer-item-text" data-i18n="menuRestore">Restore backup (JSON)</span>
         </button>
+
+        <button class="dash-drawer-item" id="dash-drawer-settings">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span class="drawer-item-text">Settings &amp; Storage</span>
+        </button>
       </nav>
 
       <footer class="dash-drawer-footer">
@@ -120,6 +125,7 @@
         <div class="dash-search-box">
           <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <input id="dash-search-input" type="search" placeholder="Search in Docs…" aria-label="Search documents" autocomplete="off">
+          <button id="dash-search-shortcut-pill" class="dash-search-pill" title="Command Palette (Ctrl+K)">Ctrl+K</button>
           <button id="dash-search-clear" class="dash-search-clear hidden" title="Clear search" aria-label="Clear search">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
@@ -255,6 +261,29 @@
             </div>
             <span class="template-label">Meeting Notes</span>
           </div>
+        </div>
+    </section>
+
+    <!-- Quick Notes Scratchpad Widget (v3.0) -->
+    <section class="dash-scratchpad-section" aria-label="Quick Scratchpad">
+      <div class="dash-section-inner">
+        <div class="dash-scratchpad-card">
+          <div class="dash-scratchpad-header">
+            <div class="scratchpad-title">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              <strong>Quick Scratchpad</strong>
+              <span class="scratchpad-subtitle">Autosaved locally · Jot down quick thoughts or Urdu text</span>
+            </div>
+            <div class="scratchpad-actions">
+              <button id="btn-scratchpad-save-doc" class="gdocs-btn-text" title="Convert note to a full document">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span>Save as Doc</span>
+              </button>
+              <button id="btn-scratchpad-copy" class="gdocs-btn-text" title="Copy text">Copy</button>
+              <button id="btn-scratchpad-clear" class="gdocs-btn-text" title="Clear note">Clear</button>
+            </div>
+          </div>
+          <textarea id="dash-scratchpad-input" class="dash-scratchpad-textarea" placeholder="Type quick thoughts, phone numbers, or Urdu text here..." rows="2"></textarea>
         </div>
       </div>
     </section>
@@ -395,6 +424,7 @@
                 <button data-action="undo"><span class="menu-label">Undo</span><span class="menu-shortcut">Ctrl+Z</span></button>
                 <button data-action="redo"><span class="menu-label">Redo</span><span class="menu-shortcut">Ctrl+Y</span></button>
                 <hr>
+                <button data-action="find-replace"><span class="menu-label">Find and replace</span><span class="menu-shortcut">Ctrl+H</span></button>
                 <button data-action="select-all"><span class="menu-label">Select all</span><span class="menu-shortcut">Ctrl+A</span></button>
                 <button data-action="remove-format"><span class="menu-label">Clear formatting</span><span class="menu-shortcut">Ctrl+\</span></button>
               </div>
@@ -414,6 +444,8 @@
               <button class="gdocs-menu-btn" id="btn-insert" aria-haspopup="true">Insert</button>
               <div class="dropdown-menu gdocs-dropdown-menu" role="menu">
                 <button data-action="insert-link"><span class="menu-label">Link</span><span class="menu-shortcut">Ctrl+K</span></button>
+                <button data-action="insert-table"><span class="menu-label">Table</span><span class="menu-shortcut">Alt+T</span></button>
+                <button data-action="insert-image"><span class="menu-label">Image</span></button>
                 <button data-action="insert-hr"><span class="menu-label">Horizontal line</span></button>
                 <button data-action="open-urdu-kb"><span class="menu-label">Urdu symbols & keyboard</span><span class="menu-shortcut">Alt+U</span></button>
               </div>
@@ -437,9 +469,12 @@
             <div class="dropdown gdocs-menu-item" id="dd-tools">
               <button class="gdocs-menu-btn" id="btn-tools" aria-haspopup="true">Tools</button>
               <div class="dropdown-menu gdocs-dropdown-menu" role="menu">
+                <button data-action="command-palette"><span class="menu-label">Command palette</span><span class="menu-shortcut">Ctrl+K</span></button>
                 <button data-action="word-count"><span class="menu-label">Word count</span><span class="menu-shortcut">Ctrl+Shift+C</span></button>
                 <button data-action="open-urdu-kb"><span class="menu-label">Urdu Keyboard</span><span class="menu-shortcut">Alt+U</span></button>
                 <button data-action="version-history"><span class="menu-label">Version history</span><span class="menu-shortcut">Ctrl+Alt+H</span></button>
+                <hr>
+                <button data-action="settings"><span class="menu-label">Settings &amp; Storage</span><span class="menu-shortcut">Alt+S</span></button>
               </div>
             </div>
 
@@ -655,6 +690,21 @@
             <span class="urdu-lbl">اردو کی بورڈ</span>
           </button>
         </div>
+
+        <div class="sep"></div>
+
+        <!-- v3.0: Table, Image, Find toolbar buttons -->
+        <div class="toolbar-group">
+          <button class="tb" data-cmd="table" title="Insert table (Alt+T)" aria-label="Insert table">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+          </button>
+          <button class="tb" data-cmd="image" title="Insert image" aria-label="Insert image">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </button>
+          <button class="tb" data-cmd="find" title="Find and replace (Ctrl+H)" aria-label="Find and replace">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -713,6 +763,67 @@
       </aside>
 
       <div id="sidebar-overlay" class="sidebar-overlay hidden"></div>
+
+      <!-- v3.0: Find & Replace floating dock -->
+      <div id="find-replace-bar" class="find-replace-dock hidden" role="search" aria-label="Find and Replace">
+        <div class="fr-row fr-find-row">
+          <svg class="fr-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="find-input" class="fr-input" type="text" placeholder="Find…" autocomplete="off" spellcheck="false">
+          <span id="find-match-count" class="fr-counter">0 of 0</span>
+          <button id="btn-find-prev" class="fr-btn" title="Previous match (Shift+Enter)" aria-label="Previous match">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
+          </button>
+          <button id="btn-find-next" class="fr-btn" title="Next match (Enter)" aria-label="Next match">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <label class="fr-case-label" title="Match case">
+            <input id="find-case-match" type="checkbox"> Aa
+          </label>
+        </div>
+        <div class="fr-row fr-replace-row">
+          <svg class="fr-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <input id="replace-input" class="fr-input" type="text" placeholder="Replace with…" autocomplete="off" spellcheck="false">
+          <button id="btn-find-replace" class="fr-btn fr-btn-text">Replace</button>
+          <button id="btn-find-replace-all" class="fr-btn fr-btn-text">All</button>
+          <button id="btn-find-close" class="fr-btn fr-close" title="Close (Esc)" aria-label="Close find and replace">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- v3.0: Table context floating toolbar (shown when cursor is in a table) -->
+      <div id="table-context-toolbar" class="table-context-bar hidden" role="toolbar" aria-label="Table editing tools">
+        <button class="tcb-btn" data-table-action="row-above" title="Insert row above">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="12" y1="4" x2="12" y2="8"/><line x1="9" y1="6" x2="15" y2="6"/></svg>
+          <span>Row ↑</span>
+        </button>
+        <button class="tcb-btn" data-table-action="row-below" title="Insert row below">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="12" y1="16" x2="12" y2="20"/><line x1="9" y1="18" x2="15" y2="18"/></svg>
+          <span>Row ↓</span>
+        </button>
+        <div class="tcb-sep"></div>
+        <button class="tcb-btn" data-table-action="col-left" title="Insert column left">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="4" y1="12" x2="8" y2="12"/><line x1="6" y1="9" x2="6" y2="15"/></svg>
+          <span>Col ←</span>
+        </button>
+        <button class="tcb-btn" data-table-action="col-right" title="Insert column right">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="16" y1="12" x2="20" y2="12"/><line x1="18" y1="9" x2="18" y2="15"/></svg>
+          <span>Col →</span>
+        </button>
+        <div class="tcb-sep"></div>
+        <button class="tcb-btn tcb-danger" data-table-action="del-row" title="Delete row">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="12" x2="15" y2="18"/><line x1="15" y1="12" x2="9" y2="18"/></svg>
+          <span>Del Row</span>
+        </button>
+        <button class="tcb-btn tcb-danger" data-table-action="del-col" title="Delete column">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="6" y1="12" x2="12" y2="18"/><line x1="12" y1="12" x2="6" y2="18"/></svg>
+          <span>Del Col</span>
+        </button>
+        <button class="tcb-btn tcb-danger" data-table-action="del-table" title="Delete entire table">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+          <span>Del Table</span>
+        </button>
+      </div>
 
       <!-- Main Document Workspace -->
       <main class="main gdocs-main" role="main">
@@ -953,6 +1064,180 @@
 
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ======================================================================
+       v3.0 MODALS: Command Palette, Table, Image, Settings
+       ====================================================================== -->
+
+  <!-- Command Palette Modal (Ctrl+K) -->
+  <div id="modal-command-palette" class="palette-backdrop hidden" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="palette-container">
+      <div class="palette-search-row">
+        <svg class="palette-search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="palette-input" class="palette-input" type="text" placeholder="Search commands…" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-controls="palette-list">
+        <kbd class="palette-esc-hint">Esc</kbd>
+      </div>
+      <div id="palette-list" class="palette-list" role="listbox"></div>
+    </div>
+  </div>
+
+  <!-- Table Insertion Modal (Alt+T) -->
+  <div id="modal-table" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-table-title">
+    <div class="modal gdocs-modal modal-table-picker">
+      <div class="modal-header">
+        <h3 id="modal-table-title">Insert table</h3>
+        <button class="icon-btn modal-close" data-modal="modal-table" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Visual grid picker -->
+        <div id="table-grid-picker" class="table-grid-picker"></div>
+        <p class="table-grid-label-row"><span id="table-grid-label" class="table-grid-label">Hover to select size</span></p>
+        <hr class="table-picker-divider">
+        <!-- Manual inputs -->
+        <div class="table-picker-inputs">
+          <div class="form-group">
+            <label for="table-rows-input">Rows</label>
+            <input type="number" id="table-rows-input" class="modal-input w-60" value="3" min="1" max="20">
+          </div>
+          <div class="form-group">
+            <label for="table-cols-input">Columns</label>
+            <input type="number" id="table-cols-input" class="modal-input w-60" value="3" min="1" max="12">
+          </div>
+          <label class="table-header-label">
+            <input type="checkbox" id="table-header-check" checked> Header row
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn ghost modal-close" data-modal="modal-table">Cancel</button>
+        <button id="btn-table-insert" class="btn primary">Insert table</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Embed Modal -->
+  <div id="modal-image" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-image-title">
+    <div class="modal gdocs-modal">
+      <div class="modal-header">
+        <h3 id="modal-image-title">Insert image</h3>
+        <button class="icon-btn modal-close" data-modal="modal-image" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="image-file-input">Upload from device</label>
+          <input type="file" id="image-file-input" class="modal-input" accept="image/*">
+        </div>
+        <p class="form-divider-or">— or —</p>
+        <div class="form-group">
+          <label for="image-url-input">Image URL (https://…)</label>
+          <input type="url" id="image-url-input" class="modal-input" placeholder="https://example.com/image.png" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="image-caption-input">Caption (optional)</label>
+          <input type="text" id="image-caption-input" class="modal-input" placeholder="Caption text…" autocomplete="off">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn ghost modal-close" data-modal="modal-image">Cancel</button>
+        <button id="btn-image-apply" class="btn primary">Insert image</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unified Settings Modal (Alt+S) -->
+  <div id="modal-settings" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-settings-title">
+    <div class="modal modal-lg gdocs-modal settings-modal-box">
+      <div class="modal-header">
+        <h3 id="modal-settings-title">Settings &amp; Storage</h3>
+        <button class="icon-btn modal-close" data-modal="modal-settings" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <!-- Settings Tab Nav -->
+      <div class="settings-tab-nav" role="tablist">
+        <button class="settings-tab-btn active" data-panel="settings-panel-general" role="tab" aria-selected="true">General</button>
+        <button class="settings-tab-btn" data-panel="settings-panel-urdu" role="tab" aria-selected="false">Urdu / اردو</button>
+        <button class="settings-tab-btn" data-panel="settings-panel-storage" role="tab" aria-selected="false">Storage</button>
+      </div>
+      <div class="modal-body settings-body">
+
+        <!-- General Panel -->
+        <div id="settings-panel-general" class="settings-tab-panel">
+          <div class="settings-section">
+            <h4 class="settings-section-title">Appearance</h4>
+            <div class="settings-row">
+              <span class="settings-label">Theme</span>
+              <div class="settings-radio-group">
+                <label><input type="radio" name="settings-theme" value="light"> Light</label>
+                <label><input type="radio" name="settings-theme" value="dark"> Dark</label>
+                <label><input type="radio" name="settings-theme" value="auto" checked> Auto (system)</label>
+              </div>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h4 class="settings-section-title">Language</h4>
+            <div class="settings-row">
+              <span class="settings-label">Interface language</span>
+              <div class="settings-radio-group">
+                <label><input type="radio" name="settings-lang" value="en" checked> English</label>
+                <label><input type="radio" name="settings-lang" value="ur"> اردو</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Urdu Panel -->
+        <div id="settings-panel-urdu" class="settings-tab-panel hidden">
+          <div class="settings-section">
+            <h4 class="settings-section-title">Urdu Typing</h4>
+            <p class="settings-hint">Toggle Docs ships with a built-in Phonetic Urdu keyboard. Press <kbd>Alt+U</kbd> in the editor to open the virtual keyboard. Nastaliq and Naskh fonts are loaded offline.</p>
+            <p class="settings-hint">Use <kbd>Ctrl+Shift+R</kbd> in any paragraph to switch it to RTL Urdu direction instantly.</p>
+          </div>
+          <div class="settings-section">
+            <h4 class="settings-section-title">Markdown shortcuts</h4>
+            <p class="settings-hint">Type <kbd>#</kbd> + Space for Heading 1, <kbd>##</kbd> for H2, <kbd>-</kbd> or <kbd>*</kbd> + Space for bullets, <kbd>1.</kbd> for numbered lists, <kbd>&gt;</kbd> for blockquote, <kbd>---</kbd> + Enter for horizontal rule.</p>
+          </div>
+        </div>
+
+        <!-- Storage Panel -->
+        <div id="settings-panel-storage" class="settings-tab-panel hidden">
+          <div class="settings-section">
+            <h4 class="settings-section-title">IndexedDB Storage</h4>
+            <div class="storage-metrics-cards">
+              <div class="storage-metric-card">
+                <span class="metric-value" id="settings-stat-docs">—</span>
+                <span class="metric-label">Documents</span>
+              </div>
+              <div class="storage-metric-card">
+                <span class="metric-value" id="settings-stat-size">—</span>
+                <span class="metric-label">Storage used</span>
+              </div>
+              <div class="storage-metric-card metric-warn">
+                <span class="metric-value" id="settings-stat-trash">—</span>
+                <span class="metric-label">In trash</span>
+              </div>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h4 class="settings-section-title">Actions</h4>
+            <div class="settings-actions-row">
+              <button id="btn-settings-backup" class="btn ghost">Backup all (JSON)</button>
+              <button id="btn-settings-purge-trash" class="btn danger">Purge trash</button>
+            </div>
+            <p class="settings-hint">All data is stored 100% locally on this device using IndexedDB. Nothing is sent to any server.</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn ghost modal-close" data-modal="modal-settings">Close</button>
+      </div>
+    </div>
+  </div>
 
 </div> <!-- /#app -->
 

@@ -808,3 +808,615 @@ kbd {
   color: var(--on-surface-variant) !important;
   font-size: 10.5px;
 }
+
+/* ==========================================================================
+   v3.0: COMMAND PALETTE (Ctrl+K / Cmd+K)
+   ========================================================================== */
+.palette-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(4px);
+  z-index: 300;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+  animation: fadeIn 0.12s ease;
+}
+
+.palette-backdrop.hidden {
+  display: none;
+}
+
+.palette-container {
+  width: min(600px, 92vw);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0,0,0,0.2);
+  overflow: hidden;
+  animation: paletteIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes paletteIn {
+  from { opacity: 0; transform: scale(0.96) translateY(-8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.palette-search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.palette-search-icon {
+  flex-shrink: 0;
+  color: var(--outline);
+}
+
+.palette-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  color: var(--on-surface);
+  outline: none;
+}
+
+.palette-input::placeholder {
+  color: var(--outline);
+}
+
+.palette-esc-hint {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--outline);
+  background: var(--surface-container-high);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px 6px;
+  flex-shrink: 0;
+}
+
+.palette-list {
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+.palette-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  color: var(--on-surface);
+  transition: background 0.1s ease;
+}
+
+.palette-item:hover,
+.palette-item.active {
+  background: var(--primary-container);
+}
+
+.palette-item.active .palette-title {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.palette-icon {
+  flex-shrink: 0;
+  color: var(--outline);
+  display: flex;
+  align-items: center;
+}
+
+.palette-title {
+  flex: 1;
+}
+
+.palette-category {
+  font-size: 11px;
+  color: var(--outline);
+  background: var(--surface-container);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.palette-shortcut {
+  font-size: 11px;
+  color: var(--outline);
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--surface-container-high);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.palette-empty {
+  padding: 28px 20px;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--outline);
+}
+
+/* ==========================================================================
+   v3.0: FIND & REPLACE FLOATING DOCK
+   ========================================================================== */
+.find-replace-dock {
+  position: fixed;
+  top: calc(var(--header-height) + 52px);
+  right: 24px;
+  z-index: 200;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18), 0 1px 4px rgba(0,0,0,0.08);
+  overflow: hidden;
+  min-width: 360px;
+  animation: slideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.find-replace-dock.hidden {
+  display: none;
+}
+
+.fr-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+}
+
+.fr-find-row {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.fr-icon {
+  flex-shrink: 0;
+  color: var(--outline);
+}
+
+.fr-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--on-surface);
+  outline: none;
+  min-width: 0;
+}
+
+.fr-input::placeholder {
+  color: var(--outline);
+}
+
+.fr-counter {
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  color: var(--outline);
+  white-space: nowrap;
+  min-width: 48px;
+  text-align: center;
+}
+
+.fr-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 7px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--on-surface-variant);
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.fr-btn:hover {
+  background: var(--surface-container);
+  border-color: var(--border);
+}
+
+.fr-btn-text {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+}
+
+.fr-close {
+  margin-left: auto;
+}
+
+.fr-case-label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--outline);
+  cursor: pointer;
+  padding: 4px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fr-case-label:hover {
+  background: var(--surface-container);
+}
+
+/* Search highlights */
+mark.td-find-highlight {
+  background: #fde68a;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+[data-theme="dark"] mark.td-find-highlight {
+  background: #92400e;
+}
+
+mark.td-find-highlight.active {
+  background: #f59e0b;
+  outline: 2px solid #d97706;
+}
+
+[data-theme="dark"] mark.td-find-highlight.active {
+  background: #b45309;
+}
+
+/* ==========================================================================
+   v3.0: TABLE CONTEXT FLOATING TOOLBAR
+   ========================================================================== */
+.table-context-bar {
+  position: fixed;
+  top: calc(var(--header-height) + 56px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 190;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.14);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  animation: slideDown 0.15s ease;
+}
+
+.table-context-bar.hidden {
+  display: none;
+}
+
+.tcb-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  color: var(--on-surface-variant);
+  transition: background 0.1s, border-color 0.1s, color 0.1s;
+  white-space: nowrap;
+}
+
+.tcb-btn:hover {
+  background: var(--surface-container);
+  border-color: var(--border);
+  color: var(--on-surface);
+}
+
+.tcb-btn.tcb-danger:hover {
+  background: #fde8e8;
+  border-color: #f5c6c6;
+  color: #c53030;
+}
+
+[data-theme="dark"] .tcb-btn.tcb-danger:hover {
+  background: #3b1c1c;
+  border-color: #7f2020;
+  color: #fc8181;
+}
+
+.tcb-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   v3.0: TABLE MODAL — Grid Picker
+   ========================================================================== */
+.modal-table-picker .modal-body {
+  padding: 20px;
+}
+
+.table-grid-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 6px;
+}
+
+.grid-picker-row {
+  display: flex;
+  gap: 3px;
+}
+
+.grid-picker-cell {
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  background: var(--surface-container-low);
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.grid-picker-cell:hover,
+.grid-picker-cell.highlighted {
+  background: var(--primary-container);
+  border-color: var(--primary);
+}
+
+.table-grid-label-row {
+  text-align: center;
+  margin: 6px 0 0;
+}
+
+.table-grid-label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--outline);
+  font-weight: 500;
+}
+
+.table-picker-divider {
+  margin: 14px 0;
+  border: none;
+  border-top: 1px solid var(--border-light);
+}
+
+.table-picker-inputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.table-picker-inputs .form-group {
+  flex: 1;
+  min-width: 80px;
+}
+
+.modal-input.w-60 {
+  width: 72px;
+}
+
+.table-header-label {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--on-surface-variant);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding-bottom: 2px;
+}
+
+/* ==========================================================================
+   v3.0: IMAGE MODAL HELPERS
+   ========================================================================== */
+.form-divider-or {
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--outline);
+  margin: 10px 0;
+}
+
+/* ==========================================================================
+   v3.0: UNIFIED SETTINGS MODAL
+   ========================================================================== */
+.settings-modal-box.modal-lg {
+  max-width: 520px;
+  min-height: 360px;
+}
+
+.settings-tab-nav {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-container-low);
+}
+
+.settings-tab-btn {
+  flex: 1;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.settings-tab-btn:hover {
+  background: var(--surface-container);
+  color: var(--on-surface);
+}
+
+.settings-tab-btn.active {
+  border-bottom-color: var(--primary);
+  color: var(--primary);
+}
+
+.settings-body {
+  padding: 0;
+}
+
+.settings-tab-panel {
+  padding: 20px;
+}
+
+.settings-tab-panel.hidden {
+  display: none;
+}
+
+.settings-section {
+  margin-bottom: 24px;
+}
+
+.settings-section:last-child {
+  margin-bottom: 0;
+}
+
+.settings-section-title {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--outline);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.settings-label {
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  color: var(--on-surface);
+  min-width: 130px;
+}
+
+.settings-radio-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.settings-radio-group label {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--on-surface-variant);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.settings-hint {
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  color: var(--outline);
+  line-height: 1.55;
+  margin-top: 8px;
+}
+
+.settings-hint kbd {
+  background: var(--surface-container-high);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.settings-actions-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+/* Storage diagnostic cards */
+.storage-metrics-cards {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.storage-metric-card {
+  flex: 1;
+  min-width: 90px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.storage-metric-card.metric-warn {
+  border-color: #f5c6c6;
+  background: #fdf2f2;
+}
+
+[data-theme="dark"] .storage-metric-card.metric-warn {
+  border-color: #7f2020;
+  background: #2d1111;
+}
+
+.metric-value {
+  font-family: var(--font-ui);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.metric-warn .metric-value {
+  color: #c53030;
+}
+
+[data-theme="dark"] .metric-warn .metric-value {
+  color: #fc8181;
+}
+
+.metric-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--outline);
+  text-align: center;
+}
+

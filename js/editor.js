@@ -1,7 +1,10 @@
 import { I18N as i18n } from './urdu.js';
+import { showToast, escapeHtml } from './state.js';
+import { openTableModal } from './tables.js';
+import { openFindReplace } from './find-replace.js';
 
 /* ==========================================================================
- Toggle Docs — Rich Text Editor & Urdu Input Controller
+ Toggle Docs — Rich Text Editor & Urdu Input Controller (v3.0)
  ========================================================================== */
 'use strict';
 
@@ -16,10 +19,12 @@ function initEditor() {
   document.addEventListener('selectionchange', onSelectionChange);
   editorEl.addEventListener('keyup', updateStats);
   editorEl.addEventListener('input', updateStats);
+  editorEl.addEventListener('keydown', handleMarkdownShortcuts);
   editorEl.addEventListener('paste', handlePaste);
 
   setupToolbar();
   setupUrduKeyboard();
+  setupImageDialog();
   updateStats();
 }
 
@@ -90,10 +95,11 @@ var PASTE_ALLOWED_TAGS = {
   P: 1, BR: 1, DIV: 1, SPAN: 1, B: 1, STRONG: 1, I: 1, EM: 1, U: 1, S: 1,
   STRIKE: 1, H1: 1, H2: 1, H3: 1, H4: 1, UL: 1, OL: 1, LI: 1,
   BLOCKQUOTE: 1, PRE: 1, CODE: 1, A: 1, SUB: 1, SUP: 1,
-  TABLE: 1, THEAD: 1, TBODY: 1, TR: 1, TD: 1, TH: 1
+  TABLE: 1, THEAD: 1, TBODY: 1, TR: 1, TD: 1, TH: 1,
+  IMG: 1, FIGURE: 1, FIGCAPTION: 1
 };
 
-var PASTE_ALLOWED_ATTRS = { href: 1, dir: 1, colspan: 1, rowspan: 1 };
+var PASTE_ALLOWED_ATTRS = { href: 1, dir: 1, colspan: 1, rowspan: 1, src: 1, alt: 1, class: 1, style: 1, width: 1, height: 1 };
 
 function sanitizePastedHtml(html) {
   var tpl = document.createElement('template');
@@ -106,7 +112,7 @@ function sanitizePastedHtml(html) {
         var tag = child.nodeName;
         if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'IFRAME' ||
             tag === 'OBJECT' || tag === 'EMBED' || tag === 'LINK' ||
-            tag === 'META' || tag === 'SVG' || tag === 'IMG' ||
+            tag === 'META' || tag === 'SVG' ||
             tag === 'VIDEO' || tag === 'AUDIO' || tag === 'FORM' ||
             tag === 'INPUT' || tag === 'BUTTON' || tag === 'TEXTAREA') {
           child.parentNode.removeChild(child);
@@ -159,6 +165,18 @@ function setupToolbar() {
 
       if (cmd === 'link') {
         openLinkDialog();
+        return;
+      }
+      if (cmd === 'table') {
+        openTableModal();
+        return;
+      }
+      if (cmd === 'image') {
+        openImageDialog();
+        return;
+      }
+      if (cmd === 'find') {
+        openFindReplace();
         return;
       }
 
@@ -518,7 +536,6 @@ function openLinkDialog() {
     }
     closeModal();
   }
-
   function onRemove() {
     restoreSelection();
     document.execCommand('unlink', false, null);
@@ -557,13 +574,131 @@ function updateStats() {
   if (statRead) statRead.textContent = readTime;
 }
 
+/* ------------------------------------------------------------------------
+   Markdown Live Auto-formatting Shortcuts
+   ------------------------------------------------------------------------ */
+function handleMarkdownShortcuts(e) {
+  if (e.key !== ' ' && e.key !== 'Enter') return;
+
+  const sel = window.getSelection();
+  if (!sel || !sel.isCollapsed || !sel.anchorNode) return;
+
+  let node = sel.anchorNode;
+  if (node.nodeType === 3) {
+    const textBefore = node.nodeValue.substring(0, sel.anchorOffset);
+
+    if (e.key === ' ') {
+      if (textBefore === '#') {
+        e.preventDefault();
+        node.nodeValue = node.nodeValue.substring(1);
+        document.execCommand('formatBlock', false, '<h1>');
+      } else if (textBefore === '##') {
+        e.preventDefault();
+        node.nodeValue = node.nodeValue.substring(2);
+        document.execCommand('formatBlock', false, '<h2>');
+      } else if (textBefore === '###') {
+        e.preventDefault();
+        node.nodeValue = node.nodeValue.substring(3);
+        document.execCommand('formatBlock', false, '<h3>');
+      } else if (textBefore === '-' || textBefore === '*') {
+        e.preventDefault();
+        node.nodeValue = node.nodeValue.substring(1);
+        document.execCommand('insertUnorderedList', false, null);
+      } else if (textBefore === '1.') {
+        e.preventDefault();
+        node.nodeValue = node.nodeValue.substring(2);
+        document.execCommand('insertOrderedList', false, null);
+      } else if (textBefore === '>') {
+        e.preventDefault();
+        node.nodeValue = node.nodeValue.substring(1);
+        document.execCommand('formatBlock', false, '<blockquote>');
+      }
+    } else if (e.key === 'Enter') {
+      if (textBefore.trim() === '---') {
+        e.preventDefault();
+        node.nodeValue = '';
+        document.execCommand('insertHorizontalRule', false, null);
+      }
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------
+   Image Embed Dialog Handling
+   ------------------------------------------------------------------------ */
+function setupImageDialog() {
+  const modal = document.getElementById('modal-image');
+  if (!modal) return;
+
+  const fileInput = document.getElementById('image-file-input');
+  const urlInput = document.getElementById('image-url-input');
+  const captionInput = document.getElementById('image-caption-input');
+  const applyBtn = document.getElementById('btn-image-apply');
+
+  if (applyBtn) {
+    applyBtn.addEventListener('click', () => {
+      const file = fileInput && fileInput.files && fileInput.files[0];
+      const url = urlInput ? urlInput.value.trim() : '';
+      const caption = captionInput ? captionInput.value.trim() : '';
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          insertImageHtml(ev.target.result, caption);
+          closeImageModal();
+        };
+        reader.readAsDataURL(file);
+      } else if (url) {
+        insertImageHtml(url, caption);
+        closeImageModal();
+      } else {
+        showToast('Please select a file or enter an image URL');
+      }
+    });
+  }
+}
+
+function insertImageHtml(src, caption) {
+  editorEl.focus();
+  restoreSelection();
+
+  let html = `<figure class="gdocs-image-wrap"><img src="${escapeHtml(src)}" alt="${escapeHtml(caption || 'Embedded Image')}">`;
+  if (caption) {
+    html += `<figcaption>${escapeHtml(caption)}</figcaption>`;
+  }
+  html += `</figure><p><br></p>`;
+
+  document.execCommand('insertHTML', false, html);
+  updateStats();
+  showToast('Image inserted');
+}
+
+export function openImageDialog() {
+  saveSelection();
+  const modal = document.getElementById('modal-image');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  const fileInput = document.getElementById('image-file-input');
+  const urlInput = document.getElementById('image-url-input');
+  const captionInput = document.getElementById('image-caption-input');
+  if (fileInput) fileInput.value = '';
+  if (urlInput) urlInput.value = '';
+  if (captionInput) captionInput.value = '';
+}
+
+export function closeImageModal() {
+  const modal = document.getElementById('modal-image');
+  if (modal) modal.classList.add('hidden');
+}
+
 // Export to global
 export const TDEditor = {
   init: initEditor,
   insertTextAtCaret: insertTextAtCaret,
   updateStats: updateStats,
   setParagraphDirection: setParagraphDirection,
-  executeCommand: executeCommand
+  executeCommand: executeCommand,
+  openImageDialog: openImageDialog
 };
 
 if (document.readyState === 'loading') {

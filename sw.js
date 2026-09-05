@@ -1,8 +1,9 @@
 /* Toggle Docs — offline service worker (only active when served over http/localhost) */
-const CACHE = 'toggle-docs-v11';
+const CACHE = 'toggle-docs-v13';
 const ASSETS = [
   './',
   './index.html',
+  './landing.html',
   './css/tokens.css',
   './css/base.css',
   './css/dashboard.css',
@@ -19,8 +20,12 @@ const ASSETS = [
   './js/editor-events.js',
   './js/settings.js',
   './js/collab.js',
-  './js/app.js'
+  './js/app.js',
+  './js/command-palette.js',
+  './js/find-replace.js',
+  './js/tables.js'
 ];
+
 
 self.addEventListener('install', function (e) {
   e.waitUntil(

@@ -1,9 +1,13 @@
 import { showToast } from './state.js';
-import { toggleLanguage, toggleTheme } from './settings.js';
+import { toggleLanguage, toggleTheme, openSettingsModal } from './settings.js';
 import { backupAllDocuments, createDocumentFromTemplate, duplicateCurrentDoc, exportDocument, handleFileImport, openRenameModal, openShortcutsModal, openVersionHistory, saveCurrentDoc, scheduleAutoSave, trashCurrentDoc } from './documents.js';
 import { renderDocList, showDashboard, toggleStarDoc } from './dashboard.js';
 import { Editor } from './editor.js';
 import { state } from './state.js';
+import { openCommandPalette } from './command-palette.js';
+import { openFindReplace } from './find-replace.js';
+import { openTableModal, insertRow, insertColumn, deleteCurrentRow, deleteCurrentColumn, deleteCurrentTable } from './tables.js';
+
 
 /* ==========================================================================
    Toggle Docs - Editor Page Event Wiring Module
@@ -85,6 +89,25 @@ export function setupEditorEvents() {
   // File import hidden input
   const fileInput = document.getElementById('file-import-input');
   if (fileInput) fileInput.addEventListener('change', handleFileImport);
+
+  // v3.0: Table context toolbar
+  const tableContextBar = document.getElementById('table-context-toolbar');
+  if (tableContextBar) {
+    tableContextBar.addEventListener('click', e => {
+      const btn = e.target.closest('[data-table-action]');
+      if (!btn) return;
+      const action = btn.getAttribute('data-table-action');
+      switch (action) {
+        case 'row-above': insertRow('above'); break;
+        case 'row-below': insertRow('below'); break;
+        case 'col-left':  insertColumn('left'); break;
+        case 'col-right': insertColumn('right'); break;
+        case 'del-row':   deleteCurrentRow(); break;
+        case 'del-col':   deleteCurrentColumn(); break;
+        case 'del-table': deleteCurrentTable(); break;
+      }
+    });
+  }
 }
 
 export function toggleSidebar(forceState) {
@@ -207,6 +230,21 @@ export function handleMenuAction(action) {
     case 'dir-rtl':
       Editor.setParagraphDirection('rtl');
       break;
+    case 'command-palette':
+      openCommandPalette();
+      break;
+    case 'find-replace':
+      openFindReplace();
+      break;
+    case 'insert-table':
+      openTableModal();
+      break;
+    case 'insert-image':
+      Editor.openImageDialog();
+      break;
+    case 'settings':
+      openSettingsModal();
+      break;
     case 'word-count':
       Editor.updateStats();
       showToast(
@@ -224,7 +262,7 @@ export function handleMenuAction(action) {
       openShortcutsModal();
       break;
     case 'about':
-      showToast('Toggle Docs — Pakistan\'s Own Docs');
+      showToast('Toggle Docs — Pakistan\'s Own Docs (v3.0)');
       break;
     case 'account-manage':
       showToast('Local account — stored entirely on this device');
@@ -239,13 +277,19 @@ export function handleMenuAction(action) {
 }
 
 /* ------------------------------------------------------------------------
-   Keyboard Shortcuts
+   Keyboard Shortcuts (v3.0)
    ------------------------------------------------------------------------ */
 export function setupShortcuts() {
   window.addEventListener('keydown', e => {
     const isCtrl = e.ctrlKey || e.metaKey;
 
-    if (isCtrl && e.key.toLowerCase() === 's') {
+    if (isCtrl && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      openCommandPalette();
+    } else if (isCtrl && (e.key.toLowerCase() === 'f' || e.key.toLowerCase() === 'h')) {
+      e.preventDefault();
+      openFindReplace();
+    } else if (isCtrl && e.key.toLowerCase() === 's') {
       e.preventDefault();
       saveCurrentDoc(true);
     } else if (isCtrl && e.altKey && e.key.toLowerCase() === 'n') {
@@ -254,6 +298,12 @@ export function setupShortcuts() {
     } else if (e.altKey && e.key.toLowerCase() === 'h') {
       e.preventDefault();
       showDashboard();
+    } else if (e.altKey && e.key.toLowerCase() === 't') {
+      e.preventDefault();
+      openTableModal();
+    } else if (e.altKey && e.key.toLowerCase() === 's') {
+      e.preventDefault();
+      openSettingsModal();
     } else if (isCtrl && e.key === '\\') {
       e.preventDefault();
       toggleSidebar();
