@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Toggle Docs icon: a toggle switch "ON", knob shaped like the Pakistani crescent + star -->
+  <rect width="512" height="512" rx="112" fill="#01411C"/>
+  <rect x="56" y="156" width="400" height="200" rx="100" fill="#F5F7F4"/>
+  <circle cx="352" cy="256" r="86" fill="#01411C"/>
+  <circle cx="386" cy="232" r="72" fill="#F5F7F4"/>
+  <path d="M300 234 l14 30 30 14 -30 14 -14 30 -14 -30 -30 -14 30 -14 z" fill="#01411C"/>
+</svg>

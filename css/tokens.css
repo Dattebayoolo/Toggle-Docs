@@ -1,0 +1,134 @@
+/* ===== Design tokens: Material 3 theme variables (light + dark) ===== */ 
+/* ==========================================================================
+   Toggle Docs — Google Docs Authentic UI & Minimalist Theme
+   Pakistan's Own Local-First Document Suite
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Google Material 3 Theme Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Google Neutral Surfaces */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-dim: #f8fafd;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f0f4f9;
+  --surface-container: #edf2fa;
+  --surface-container-high: #e3e8ef;
+  --surface-container-highest: #dbe1eb;
+
+  /* Google Typography & Text Colors */
+  --on-surface: #1f1f1f;
+  --on-surface-variant: #444746;
+  --outline: #747775;
+  --outline-variant: #c4c7c5;
+  --border: #dadce0;
+  --border-light: #f1f3f4;
+
+  /* Toggle Docs Primary Accent (Pakistani Emerald in Google Tonal System) */
+  --primary: #0e7a3d;
+  --primary-hover: #0a6532;
+  --primary-active: #074e26;
+  --primary-container: #d0ebd7;
+  --on-primary-container: #00210e;
+  --on-primary: #ffffff;
+  
+  /* Google Docs Blue / Secondary Accents */
+  --g-blue: #0b57d0;
+  --g-blue-container: #d3e3fd;
+  --g-blue-on-container: #041e49;
+
+  /* Google Star & Danger Accents */
+  --star: #f5b301;
+  --star-hover: #e09f00;
+  --danger: #b3261e;
+  --danger-container: #f9dedc;
+  --on-danger-container: #410e0b;
+
+  /* Google Docs Canvas & Paper */
+  --desk-bg: #f8fafd;
+  --paper-bg: #ffffff;
+  --paper-ink: #1f1f1f;
+  --paper-shadow: rgba(60, 64, 67, 0.15) 0px 1px 3px 1px, rgba(60, 64, 67, 0.3) 0px 1px 2px 0px;
+
+  /* Elevation Shadows (Ambient & Key) */
+  --shadow-1: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  --shadow-2: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+  --shadow-3: 0 4px 8px 3px rgba(60, 64, 67, 0.15), 0 1px 3px 0 rgba(60, 64, 67, 0.3);
+  --shadow-4: 0 6px 10px 4px rgba(60, 64, 67, 0.15), 0 2px 3px 0 rgba(60, 64, 67, 0.3);
+
+  /* Material 3 Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Fonts */
+  --font-ui: 'Google Sans', 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body: 'Roboto', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --font-nastaliq: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', serif;
+  --font-naskh: 'Noto Naskh Arabic', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Roboto Mono', Consolas, monospace;
+
+  /* Keyboard & Component Tokens */
+  --kb-key-bg: #ffffff;
+  --kb-key-ink: #1f1f1f;
+  --kb-key-shadow: 0 2px 0 #cfd6cf, 0 3px 5px rgba(0, 0, 0, 0.06);
+
+  /* Layout Dimensions */
+  --header-height: 64px;
+  --toolbar-height: 40px;
+  --statusbar-height: 32px;
+  --sidebar-width: 280px;
+}
+
+[data-theme="dark"] {
+  --bg: #121212;
+  --surface: #1e1f20;
+  --surface-dim: #131314;
+  --surface-container-lowest: #0e0e0f;
+  --surface-container-low: #1b1b1c;
+  --surface-container: #282a2c;
+  --surface-container-high: #333537;
+  --surface-container-highest: #3c4043;
+
+  --on-surface: #e3e3e3;
+  --on-surface-variant: #c4c7c5;
+  --outline: #8e918f;
+  --outline-variant: #444746;
+  --border: #3c4043;
+  --border-light: #282a2c;
+
+  --primary: #34d375;
+  --primary-hover: #48e287;
+  --primary-active: #2bbd65;
+  --primary-container: #0f4f27;
+  --on-primary-container: #9afbbd;
+  --on-primary: #003916;
+
+  --star: #fdd835;
+  --star-hover: #ffea00;
+  --danger: #f2b8b5;
+  --danger-container: #8c1d18;
+  --on-danger-container: #f9dedc;
+
+  --desk-bg: #131314;
+  --paper-bg: #1e1f20;
+  --paper-ink: #e3e3e3;
+  --paper-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 2px 6px 2px rgba(0, 0, 0, 0.55);
+  --shadow-3: 0 4px 12px 3px rgba(0, 0, 0, 0.6);
+  --shadow-4: 0 8px 24px 4px rgba(0, 0, 0, 0.7);
+
+  --kb-key-bg: #2b322c;
+  --kb-key-ink: #e3e3e3;
+  --kb-key-shadow: 0 2px 0 #181d19, 0 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+

@@ -1,0 +1,279 @@
+/* ===== Reset, base styles, responsive breakpoints, print stylesheet ===== */ 
+   Reset & Base Styles
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.gdocs-body {
+  font-family: var(--font-ui);
+  background-color: var(--surface-dim);
+  color: var(--on-surface);
+  line-height: 1.5;
+  user-select: none;
+}
+
+#app.gdocs-app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--surface);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.flex-spacer {
+  flex: 1;
+}
+
+/* Common Google Icons & Avatars */
+.gdocs-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--on-surface-variant);
+  transition: background 0.15s ease, color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.gdocs-icon-btn:hover {
+  background: var(--surface-container-high);
+  color: var(--on-surface);
+}
+
+.gdocs-icon-btn:active {
+  background: var(--surface-container-highest);
+}
+
+.gdocs-icon-btn.sm {
+  width: 32px;
+  height: 32px;
+}
+
+.gdocs-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--outline-variant);
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.gdocs-avatar:hover {
+  transform: scale(1.05);
+}
+
+.gdocs-lang-btn {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: var(--radius-full);
+  background: var(--surface-container-low);
+  border: 1px solid var(--border);
+  color: var(--on-surface);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-nastaliq);
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.gdocs-lang-btn:hover {
+  background: var(--surface-container-high);
+  border-color: var(--outline-variant);
+}
+
+.lang-globe-icon {
+  color: var(--outline);
+}
+
+.tab-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sidebar-storage-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--outline);
+  font-size: 12px;
+}
+
+.kb-badge-svg {
+  color: var(--primary);
+}
+
+
+/* ==========================================================================
+
+
+
+   Responsive Design
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .gdocs-sidebar {
+    position: fixed;
+    top: var(--header-height);
+    bottom: 0;
+    inset-inline-start: 0;
+    box-shadow: var(--shadow-3);
+  }
+
+  .gdocs-paper {
+    width: 94vw;
+    padding: 48px 32px;
+    min-height: 800px;
+  }
+
+  .gdocs-desk {
+    padding: 16px 8px 48px 8px;
+  }
+
+  .gdocs-ruler-container {
+    display: none;
+  }
+
+  .dash-header-left, .dash-header-right {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .dash-header {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+
+  .dash-search-container {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 6px;
+  }
+
+  .dash-privacy-pill {
+    display: none;
+  }
+
+  .gdocs-header {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+
+  .gdocs-menubar {
+    display: none;
+  }
+
+  .gdocs-doc-title {
+    max-width: 180px;
+    font-size: 16px;
+  }
+
+  .gdocs-share-btn span {
+    display: none;
+  }
+
+  .gdocs-share-btn {
+    padding: 0 10px;
+  }
+
+  .tb-urdu-pill .urdu-lbl {
+    display: none;
+  }
+
+  .gdocs-kb {
+    width: 100vw;
+    bottom: var(--statusbar-height);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .kb-key {
+    min-width: 32px;
+    height: 34px;
+    font-size: 15px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Print Stylesheet
+   -------------------------------------------------------------------------- */
+@media print {
+  body.gdocs-body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    overflow: visible !important;
+  }
+
+  .view-dashboard, .gdocs-header, .gdocs-toolbar-container, .gdocs-sidebar, .gdocs-ruler-container,
+  .gdocs-statusbar, .gdocs-kb, .modal-backdrop, .toast-container, .sidebar-overlay, .dash-fab {
+    display: none !important;
+  }
+
+  .view-editor {
+    display: block !important;
+  }
+
+  .gdocs-body-layout, .gdocs-main, .gdocs-desk, .paper-container {
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+    overflow: visible !important;
+  }
+
+  .gdocs-paper {
+    width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: #000000 !important;
+  }
+
+  .gdocs-editor {
+    min-height: auto !important;
+  }
+}

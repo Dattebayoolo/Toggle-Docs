@@ -1,0 +1,2075 @@
+/* ===== View 2: editor chrome, toolbar, workspace, ruler/desk, Urdu UI mode ===== */ 
+   VIEW 2: GOOGLE DOCS EDITOR VIEW (docs.google.com/document/...)
+
+   ========================================================================== */
+
+.view-editor {
+
+  display: flex;
+
+  flex-direction: column;
+
+  height: 100vh;
+
+  width: 100vw;
+
+  overflow: hidden;
+
+  position: relative;
+
+  background-color: var(--surface);
+
+}
+
+
+
+/* Editor Header */
+
+.gdocs-header {
+
+  height: var(--header-height);
+
+  background: var(--surface);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 16px 0 8px;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+
+  z-index: 100;
+
+  border-bottom: 1px solid var(--border-light);
+
+}
+
+
+
+.gdocs-header-left {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  min-width: 0;
+
+  flex: 1;
+
+}
+
+
+
+.back-btn {
+
+  margin-inline-end: 2px;
+
+}
+
+
+
+.gdocs-logo-link {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  text-decoration: none;
+
+  flex-shrink: 0;
+
+}
+
+
+
+.gdocs-doc-icon {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+}
+
+
+
+.gdocs-logo-link:hover .gdocs-doc-icon {
+
+  transform: scale(1.06);
+
+}
+
+
+
+.gdocs-title-and-menu {
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  min-width: 0;
+
+  margin-inline-start: 6px;
+
+  flex: 1;
+
+}
+
+
+
+.gdocs-title-row {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  min-width: 0;
+
+}
+
+
+
+.gdocs-doc-title {
+
+  border: 1px solid transparent;
+
+  background: transparent;
+
+  color: var(--on-surface);
+
+  font-family: var(--font-ui);
+
+  font-size: 18px;
+
+  font-weight: 400;
+
+  padding: 2px 7px;
+
+  border-radius: var(--radius-xs);
+
+  outline: none;
+
+  max-width: 380px;
+
+  min-width: 120px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  transition: all 0.12s ease;
+
+}
+
+
+
+.gdocs-doc-title:hover {
+
+  border-color: var(--border);
+
+  background: var(--surface-container-low);
+
+}
+
+
+
+.gdocs-doc-title:focus {
+
+  border-color: var(--primary);
+
+  background: var(--surface);
+
+  box-shadow: 0 0 0 2px var(--primary-container);
+
+}
+
+
+
+.gdocs-doc-actions {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  flex-shrink: 0;
+
+}
+
+
+
+.gdocs-mini-btn {
+
+  width: 28px;
+
+  height: 28px;
+
+  border-radius: var(--radius-full);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: var(--on-surface-variant);
+
+  transition: background 0.15s ease, color 0.15s ease;
+
+}
+
+
+
+.gdocs-mini-btn:hover {
+
+  background: var(--surface-container-high);
+
+  color: var(--on-surface);
+
+}
+
+
+
+#btn-star.starred {
+
+  color: var(--star);
+
+}
+
+#btn-star.starred svg {
+
+  fill: var(--star);
+
+}
+
+
+
+.gdocs-save-cloud {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 3px 8px;
+
+  border-radius: var(--radius-xs);
+
+  color: var(--on-surface-variant);
+
+  font-family: var(--font-ui);
+
+  font-size: 12px;
+
+  cursor: default;
+
+  user-select: none;
+
+  transition: background 0.15s ease;
+
+}
+
+
+
+.gdocs-save-cloud:hover {
+
+  background: var(--surface-container-low);
+
+}
+
+
+
+.gdocs-save-cloud .cloud-icon {
+
+  color: var(--outline);
+
+  transition: color 0.2s ease;
+
+}
+
+
+
+.save-status-label {
+
+  display: none;
+
+}
+
+
+
+@media (min-width: 820px) {
+
+  .save-status-label {
+
+    display: inline-block;
+
+  }
+
+}
+
+
+
+.gdocs-save-cloud.saved .cloud-icon {
+
+  color: var(--primary);
+
+}
+
+
+
+.gdocs-save-cloud.dirty .cloud-icon {
+
+  color: var(--star);
+
+}
+
+
+
+.gdocs-save-cloud.saving .cloud-icon {
+
+  color: var(--g-blue);
+
+  animation: spinSlow 2s linear infinite;
+
+}
+
+
+
+@keyframes spinSlow {
+
+  100% { transform: rotate(360deg); }
+
+}
+
+
+
+/* Classic Menu Bar */
+
+.gdocs-menubar {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 1px;
+
+  margin-top: -1px;
+
+}
+
+
+
+.gdocs-menu-item {
+
+  position: relative;
+
+}
+
+
+
+.gdocs-menu-btn {
+
+  height: 24px;
+
+  padding: 0 8px;
+
+  border-radius: 4px;
+
+  font-family: var(--font-ui);
+
+  font-size: 13.5px;
+
+  font-weight: 400;
+
+  color: var(--on-surface-variant);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  transition: background 0.1s ease, color 0.1s ease;
+
+}
+
+
+
+.gdocs-menu-btn:hover {
+
+  background: var(--surface-container-high);
+
+  color: var(--on-surface);
+
+}
+
+
+
+.gdocs-menu-item.open .gdocs-menu-btn {
+
+  background: var(--surface-container-highest);
+
+  color: var(--on-surface);
+
+}
+
+
+
+.gdocs-dropdown-menu {
+
+  position: absolute;
+
+  top: calc(100% + 4px);
+
+  inset-inline-start: 0;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  border-radius: 8px;
+
+  box-shadow: 0 2px 6px 2px rgba(60, 64, 67, 0.15), 0 1px 2px 0 rgba(60, 64, 67, 0.3);
+
+  min-width: 250px;
+
+  padding: 6px 0;
+
+  z-index: 200;
+
+  display: none;
+
+}
+
+
+
+.dropdown.open .gdocs-dropdown-menu {
+
+  display: block;
+
+}
+
+
+
+.gdocs-dropdown-menu button {
+
+  width: 100%;
+
+  text-align: start;
+
+  padding: 7px 16px;
+
+  font-family: var(--font-ui);
+
+  font-size: 13px;
+
+  color: var(--on-surface);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 16px;
+
+  transition: background 0.1s ease;
+
+}
+
+
+
+.gdocs-dropdown-menu button:hover {
+
+  background: var(--surface-container);
+
+}
+
+
+
+.gdocs-dropdown-menu .menu-shortcut {
+
+  color: var(--outline);
+
+  font-size: 11.5px;
+
+  letter-spacing: 0.2px;
+
+}
+
+
+
+.gdocs-dropdown-menu button.danger {
+
+  color: var(--danger);
+
+}
+
+
+
+.gdocs-dropdown-menu button.danger:hover {
+
+  background: var(--danger-container);
+
+  color: var(--on-danger-container);
+
+}
+
+
+
+.gdocs-dropdown-menu hr {
+
+  border: 0;
+
+  border-top: 1px solid var(--border-light);
+
+  margin: 6px 0;
+
+}
+
+
+
+/* Header Right Actions */
+
+.gdocs-header-right {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+
+}
+
+
+
+.gdocs-share-btn {
+
+  height: 38px;
+
+  padding: 0 18px;
+
+  border-radius: var(--radius-full);
+
+  background: var(--primary-container);
+
+  color: var(--on-primary-container);
+
+  font-family: var(--font-ui);
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.12);
+
+  transition: all 0.15s ease;
+
+}
+
+
+
+.gdocs-share-btn:hover {
+
+  background: #bce3c5;
+
+  box-shadow: 0 1px 3px 1px rgba(60, 64, 67, 0.2);
+
+}
+
+
+
+/* Material 3 Floating Action Toolbar */
+
+.gdocs-toolbar-container {
+
+  display: flex;
+
+  justify-content: center;
+
+  padding: 6px 12px;
+
+  background: var(--surface);
+
+  border-bottom: 1px solid var(--border-light);
+
+  z-index: 50;
+
+  flex-shrink: 0;
+
+}
+
+
+
+.gdocs-toolbar {
+
+  width: 100%;
+
+  max-width: 1400px;
+
+  height: var(--toolbar-height);
+
+  background: var(--surface-container);
+
+  border-radius: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+  padding: 0 12px;
+
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.12);
+
+  transition: background 0.2s ease;
+
+}
+
+
+
+.gdocs-toolbar::-webkit-scrollbar {
+
+  height: 2px;
+
+}
+
+.gdocs-toolbar::-webkit-scrollbar-thumb {
+
+  background: var(--outline-variant);
+
+}
+
+
+
+.toolbar-group {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 2px;
+
+  flex-shrink: 0;
+
+}
+
+
+
+.sep {
+
+  width: 1px;
+
+  height: 18px;
+
+  background: var(--outline-variant);
+
+  margin: 0 4px;
+
+  flex-shrink: 0;
+
+  opacity: 0.6;
+
+}
+
+
+
+.tb {
+
+  width: 28px;
+
+  height: 28px;
+
+  border-radius: 6px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: var(--on-surface-variant);
+
+  font-size: 13.5px;
+
+  transition: all 0.12s ease;
+
+  flex-shrink: 0;
+
+}
+
+
+
+.tb:hover {
+
+  background: var(--surface-container-high);
+
+  color: var(--on-surface);
+
+}
+
+
+
+.tb:active {
+
+  transform: scale(0.92);
+
+}
+
+
+
+.tb.active {
+
+  background: var(--primary-container);
+
+  color: var(--on-primary-container);
+
+}
+
+
+
+.tb .lbl {
+
+  font-size: 13.5px;
+
+  line-height: 1;
+
+}
+
+
+
+/* Custom Sleek Google Workspace Selects */
+
+.gdocs-select {
+
+  height: 28px;
+
+  border-radius: 6px;
+
+  border: 1px solid transparent;
+
+  background-color: transparent;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23444746' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+
+  background-position: right 6px center;
+
+  appearance: none;
+
+  -webkit-appearance: none;
+
+  color: var(--on-surface);
+
+  font-family: var(--font-ui);
+
+  font-size: 12.5px;
+
+  font-weight: 500;
+
+  padding: 0 22px 0 8px;
+
+  cursor: pointer;
+
+  outline: none;
+
+  transition: all 0.12s ease;
+
+}
+
+
+
+[dir="rtl"] .gdocs-select {
+
+  background-position: left 6px center;
+
+  padding: 0 8px 0 22px;
+
+}
+
+
+
+[data-theme="dark"] .gdocs-select {
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23c4c7c5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+
+}
+
+
+
+.gdocs-select:hover {
+
+  background-color: var(--surface-container-high);
+
+}
+
+
+
+.gdocs-select:focus {
+
+  background-color: var(--surface);
+
+  border-color: var(--primary);
+
+}
+
+
+
+.heading-select { min-width: 110px; }
+
+.font-select { min-width: 125px; }
+
+
+
+.color-picker-btn {
+
+  position: relative;
+
+  display: inline-flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+
+}
+
+
+
+.color-icon-text {
+
+  font-weight: 700;
+
+  font-size: 13px;
+
+  line-height: 1;
+
+}
+
+
+
+.color-bar {
+
+  width: 16px;
+
+  height: 3px;
+
+  border-radius: 1px;
+
+  margin-top: 2px;
+
+  background: #1a1a1a;
+
+}
+
+
+
+#color-highlight-bar {
+
+  background: #fff176;
+
+}
+
+
+
+.gdocs-color-input {
+
+  position: absolute;
+
+  opacity: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  cursor: pointer;
+
+  inset: 0;
+
+}
+
+
+
+.tb-urdu-pill {
+
+  width: auto;
+
+  height: 28px;
+
+  padding: 0 10px;
+
+  gap: 6px;
+
+  background: var(--primary-container);
+
+  color: var(--on-primary-container);
+
+  border-radius: var(--radius-full);
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  font-family: var(--font-nastaliq);
+
+  transition: all 0.15s ease;
+
+}
+
+
+
+.tb-urdu-pill:hover {
+
+  background: #bce3c5;
+
+}
+
+
+
+.tb-urdu-pill.active {
+
+  background: var(--primary);
+
+  color: #ffffff;
+
+}
+
+
+
+/* --------------------------------------------------------------------------
+
+   Editor Workspace Layout (Sidebar + Desk Canvas)
+
+   -------------------------------------------------------------------------- */
+
+.gdocs-body-layout {
+
+  flex: 1;
+
+  display: flex;
+
+  min-height: 0;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background: var(--desk-bg);
+
+}
+
+
+
+.gdocs-sidebar {
+
+  width: var(--sidebar-width);
+
+  background: var(--surface);
+
+  border-inline-end: 1px solid var(--border);
+
+  display: flex;
+
+  flex-direction: column;
+
+  flex-shrink: 0;
+
+  z-index: 60;
+
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), margin 0.25s ease;
+
+}
+
+
+
+.gdocs-sidebar.collapsed {
+
+  transform: translateX(-100%);
+
+  margin-inline-end: calc(-1 * var(--sidebar-width));
+
+}
+
+
+
+[dir="rtl"] .gdocs-sidebar.collapsed {
+
+  transform: translateX(100%);
+
+}
+
+
+
+.sidebar-top {
+
+  padding: 16px 14px 10px 14px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+
+}
+
+
+
+.gdocs-new-btn {
+
+  height: 48px;
+
+  border-radius: var(--radius-lg);
+
+  background: var(--surface);
+
+  color: var(--on-surface);
+
+  border: 1px solid var(--border);
+
+  box-shadow: var(--shadow-1);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 18px;
+
+  font-family: var(--font-ui);
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  transition: all 0.15s ease;
+
+}
+
+
+
+.gdocs-new-btn:hover {
+
+  box-shadow: var(--shadow-2);
+
+  background: var(--surface-container-low);
+
+}
+
+
+
+.gdocs-search-wrap {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+}
+
+
+
+.gdocs-search-wrap .search-icon {
+
+  position: absolute;
+
+  inset-inline-start: 12px;
+
+  color: var(--on-surface-variant);
+
+  pointer-events: none;
+
+}
+
+
+
+.gdocs-search-wrap input {
+
+  width: 100%;
+
+  height: 38px;
+
+  border: 1px solid transparent;
+
+  border-radius: var(--radius-full);
+
+  background: var(--surface-container);
+
+  color: var(--on-surface);
+
+  padding-inline-start: 38px;
+
+  padding-inline-end: 12px;
+
+  font-family: var(--font-ui);
+
+  font-size: 13.5px;
+
+  outline: none;
+
+}
+
+
+
+.gdocs-nav-filters {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+}
+
+
+
+.gdocs-nav-item {
+
+  height: 38px;
+
+  border-radius: var(--radius-full);
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 16px;
+
+  gap: 12px;
+
+  font-family: var(--font-ui);
+
+  font-size: 13.5px;
+
+  font-weight: 500;
+
+  color: var(--on-surface-variant);
+
+  transition: background 0.12s ease;
+
+}
+
+
+
+.gdocs-nav-item:hover {
+
+  background: var(--surface-container);
+
+}
+
+
+
+.gdocs-nav-item.active {
+
+  background: var(--primary-container);
+
+  color: var(--on-primary-container);
+
+  font-weight: 600;
+
+}
+
+
+
+.gdocs-nav-item .nav-text {
+
+  flex: 1;
+
+  text-align: start;
+
+}
+
+
+
+.gdocs-nav-item .count-pill {
+
+  font-size: 11px;
+
+  padding: 1px 7px;
+
+  border-radius: var(--radius-full);
+
+  background: var(--surface-container-high);
+
+}
+
+
+
+.sidebar-content {
+
+  flex: 1;
+
+  overflow-y: auto;
+
+  overflow-x: hidden;
+
+  padding: 6px 10px;
+
+}
+
+
+
+.doc-list {
+
+  list-style: none;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+}
+
+
+
+.doc-item {
+
+  padding: 8px 12px;
+
+  border-radius: var(--radius-sm);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  cursor: pointer;
+
+  transition: background 0.12s ease;
+
+}
+
+
+
+.doc-item:hover {
+
+  background: var(--surface-container);
+
+}
+
+
+
+.doc-item.active {
+
+  background: var(--surface-container-highest);
+
+}
+
+
+
+.doc-item-main {
+
+  flex: 1;
+
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+}
+
+
+
+.doc-item-title {
+
+  font-family: var(--font-ui);
+
+  font-size: 13.5px;
+
+  font-weight: 500;
+
+  color: var(--on-surface);
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+}
+
+
+
+.doc-item-meta {
+
+  font-size: 11px;
+
+  color: var(--outline);
+
+}
+
+
+
+.doc-item-actions {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 2px;
+
+  opacity: 0;
+
+  transition: opacity 0.15s ease;
+
+}
+
+
+
+.doc-item:hover .doc-item-actions,
+
+.doc-item.active .doc-item-actions {
+
+  opacity: 1;
+
+}
+
+
+
+.sidebar-overlay {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.35);
+
+  backdrop-filter: blur(2px);
+
+  z-index: 55;
+
+}
+
+
+
+/* --------------------------------------------------------------------------
+
+   Google Docs Horizontal Ruler & Desk
+
+   -------------------------------------------------------------------------- */
+
+.gdocs-ruler-container {
+
+  height: 18px;
+
+  background: var(--surface);
+
+  border-bottom: 1px solid var(--border);
+
+  display: flex;
+
+  justify-content: center;
+
+  z-index: 20;
+
+  flex-shrink: 0;
+
+}
+
+
+
+/* Main workspace column must stretch to fill the space left of/after the
+
+   sidebar, otherwise it shrink-wraps to the paper width and the paper
+
+   (and ruler) hug one side of the window instead of being centered. */
+
+.gdocs-main {
+
+  flex: 1 1 auto;
+
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+
+}
+
+
+
+.gdocs-ruler {
+
+  width: 816px;
+
+  height: 100%;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 80px;
+
+  user-select: none;
+
+}
+
+
+
+.ruler-track {
+
+  width: 100%;
+
+  height: 100%;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-end;
+
+  border-bottom: 1px solid var(--outline-variant);
+
+  background-image: repeating-linear-gradient(to right, transparent, transparent 11px, var(--outline-variant) 12px, transparent 13px);
+
+  background-size: 100% 4px;
+
+  background-repeat: no-repeat;
+
+  background-position: bottom;
+
+}
+
+
+
+.ruler-num {
+
+  font-family: var(--font-ui);
+
+  font-size: 9px;
+
+  color: var(--outline);
+
+  line-height: 1;
+
+  margin-bottom: 3px;
+
+}
+
+
+
+.ruler-indent-left, .ruler-indent-right {
+
+  width: 0;
+
+  height: 0;
+
+  border-left: 5px solid transparent;
+
+  border-right: 5px solid transparent;
+
+  border-top: 7px solid var(--primary);
+
+  position: absolute;
+
+  top: 1px;
+
+}
+
+.ruler-indent-left { inset-inline-start: 80px; }
+
+.ruler-indent-right { inset-inline-end: 80px; }
+
+
+
+.gdocs-desk {
+
+  flex: 1;
+
+  overflow-y: auto;
+
+  overflow-x: auto;
+
+  display: flex;
+
+  justify-content: center;
+
+  padding: 24px 16px 80px 16px;
+
+  background-color: var(--desk-bg);
+
+}
+
+
+
+.gdocs-desk::-webkit-scrollbar {
+
+  width: 10px;
+
+  height: 10px;
+
+}
+
+.gdocs-desk::-webkit-scrollbar-thumb {
+
+  background: var(--outline-variant);
+
+  border-radius: 10px;
+
+  border: 2px solid var(--desk-bg);
+
+}
+
+
+
+.paper-container {
+
+  display: flex;
+
+  justify-content: center;
+
+  width: 100%;
+
+  transform-origin: top center;
+
+  transition: transform 0.15s ease;
+
+}
+
+
+
+.gdocs-paper {
+
+  width: 816px;
+
+  min-height: 1056px;
+
+  background: var(--paper-bg);
+
+  color: var(--paper-ink);
+
+  box-shadow: var(--paper-shadow);
+
+  padding: 72px 80px;
+
+  border-radius: 2px;
+
+  cursor: text;
+
+  box-sizing: border-box;
+
+  position: relative;
+
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+
+}
+
+
+
+.gdocs-editor {
+
+  outline: none;
+
+  min-height: 900px;
+
+  font-family: var(--font-body);
+
+  font-size: 11pt;
+
+  line-height: 1.6;
+
+  color: var(--paper-ink);
+
+  user-select: text;
+
+  word-wrap: break-word;
+
+  overflow-wrap: break-word;
+
+  caret-color: var(--primary);
+
+}
+
+
+
+.gdocs-editor:empty::before,
+
+.gdocs-editor > p:only-child:empty::before,
+
+.gdocs-editor > p:only-child > br:only-child::before {
+
+  content: attr(data-placeholder);
+
+  color: var(--outline);
+
+  opacity: 0.6;
+
+  pointer-events: none;
+
+  display: block;
+
+}
+
+
+
+.gdocs-editor h1 {
+
+  font-family: var(--font-ui);
+
+  font-size: 20pt;
+
+  font-weight: 500;
+
+  line-height: 1.25;
+
+  margin: 16pt 0 4pt 0;
+
+  color: var(--paper-ink);
+
+}
+
+
+
+.gdocs-editor h2 {
+
+  font-family: var(--font-ui);
+
+  font-size: 16pt;
+
+  font-weight: 500;
+
+  line-height: 1.3;
+
+  margin: 14pt 0 3pt 0;
+
+  color: var(--paper-ink);
+
+}
+
+
+
+.gdocs-editor h3 {
+
+  font-family: var(--font-ui);
+
+  font-size: 14pt;
+
+  font-weight: 500;
+
+  line-height: 1.35;
+
+  margin: 12pt 0 2pt 0;
+
+  color: #434343;
+
+}
+
+
+
+[data-theme="dark"] .gdocs-editor h3 {
+
+  color: #b0b8b1;
+
+}
+
+
+
+.gdocs-editor p {
+
+  margin-bottom: 8pt;
+
+}
+
+
+
+.gdocs-editor blockquote {
+
+  border-inline-start: 3px solid var(--primary);
+
+  padding: 6px 16px;
+
+  margin: 12pt 0;
+
+  color: var(--on-surface-variant);
+
+  font-style: italic;
+
+  background: var(--surface-container-low);
+
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+
+}
+
+
+
+.gdocs-editor pre {
+
+  background: var(--surface-container);
+
+  border: 1px solid var(--border);
+
+  padding: 12px 16px;
+
+  border-radius: var(--radius-xs);
+
+  font-family: var(--font-mono);
+
+  font-size: 10pt;
+
+  line-height: 1.5;
+
+  margin: 12pt 0;
+
+  overflow-x: auto;
+
+}
+
+
+
+.gdocs-editor code {
+
+  font-family: var(--font-mono);
+
+  background: var(--surface-container);
+
+  padding: 2px 5px;
+
+  border-radius: 3px;
+
+  font-size: 0.9em;
+
+}
+
+
+
+.gdocs-editor ul, .gdocs-editor ol {
+
+  padding-inline-start: 28px;
+
+  margin: 6pt 0 8pt 0;
+
+}
+
+
+
+.gdocs-editor li {
+
+  margin-bottom: 2pt;
+
+}
+
+
+
+.gdocs-editor hr {
+
+  border: 0;
+
+  border-top: 1px solid var(--outline-variant);
+
+  margin: 18pt 0;
+
+}
+
+
+
+.gdocs-editor a {
+
+  color: var(--g-blue);
+
+  text-decoration: underline;
+
+  text-underline-offset: 2px;
+
+}
+
+
+
+.gdocs-editor ::selection {
+
+  background: var(--primary-container);
+
+  color: var(--on-primary-container);
+
+}
+
+
+
+/* Urdu & Calligraphy */
+
+.font-nastaliq,
+
+.gdocs-editor[data-font="nastaliq"],
+
+[lang="ur"] .gdocs-editor {
+
+  font-family: var(--font-nastaliq);
+
+  line-height: 2.3;
+
+  font-size: 13.5pt;
+
+}
+
+
+
+.font-naskh,
+
+.gdocs-editor[data-font="naskh"] {
+
+  font-family: var(--font-naskh);
+
+  line-height: 1.9;
+
+  font-size: 12pt;
+
+}
+
+
+
+.font-serif,
+
+.gdocs-editor[data-font="serif"] {
+
+  font-family: Georgia, 'Times New Roman', serif;
+
+}
+
+
+
+.font-mono,
+
+.gdocs-editor[data-font="mono"] {
+
+  font-family: var(--font-mono);
+
+  font-size: 10.5pt;
+
+}
+
+
+
+[dir="rtl"] {
+
+  direction: rtl;
+
+  text-align: right;
+
+}
+
+
+
+[dir="rtl"] .gdocs-editor blockquote {
+
+  border-radius: var(--radius-xs) 0 0 var(--radius-xs);
+
+}
+
+
+
+/* --------------------------------------------------------------------------
+
+   Urdu UI mode — app chrome stays LTR; only translated text runs are RTL so
+
+   labels/toasts read naturally without mirroring the layout.
+
+   -------------------------------------------------------------------------- */
+
+html[data-lang="ur"] [data-i18n] {
+
+  direction: rtl;
+
+  unicode-bidi: isolate;
+
+}
+
+
+
+html[data-lang="ur"] .toast,
+
+html[data-lang="ur"] .gdocs-toast {
+
+  direction: rtl;
+
+}
+
+
+
+html[data-lang="ur"] .dash-drawer-item,
+
+html[data-lang="ur"] .gdocs-menu-item,
+
+html[data-lang="ur"] .dash-card-title,
+
+html[data-lang="ur"] .doc-item-title {
+
+  direction: rtl;
+
+  unicode-bidi: isolate;
+
+}
+
+
+
+/* Status Bar */
+
+.gdocs-statusbar {
+
+  height: var(--statusbar-height);
+
+  background: var(--surface);
+
+  border-top: 1px solid var(--border);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 16px;
+
+  font-family: var(--font-ui);
+
+  font-size: 11.5px;
+
+  color: var(--outline);
+
+  flex-shrink: 0;
+
+  z-index: 25;
+
+}
+
+
+
+.status-group {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+}
+
+
+
+.status-item strong {
+
+  color: var(--on-surface);
+
+  font-weight: 500;
+
+}
+
+
+
+.status-sep {
+
+  color: var(--border);
+
+}
+
+
+
+.status-btn {
+
+  background: var(--surface-container);
+
+  border-radius: var(--radius-full);
+
+  padding: 2px 10px;
+
+  font-family: var(--font-nastaliq);
+
+  font-size: 11.5px;
+
+  font-weight: 600;
+
+  color: var(--primary);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+}
+
+
+
+.status-btn:hover {
+
+  background: var(--primary-container);
+
+  color: var(--on-primary-container);
+
+}
+
+
+
+.status-badge {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  font-weight: 500;
+
+}
+
+
+
+.badge-dot {
+
+  width: 7px;
+
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--primary);
+
+}
+
+
+
+
+
+/* ==========================================================================
+

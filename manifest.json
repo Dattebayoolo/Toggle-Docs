@@ -1,0 +1,16 @@
+{
+  "name": "Toggle Docs",
+  "short_name": "Toggle Docs",
+  "description": "Pakistan's own local-first document editor. Your documents never leave your device — no account, no internet needed.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#01411C",
+  "theme_color": "#01411C",
+  "lang": "en",
+  "dir": "auto",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
