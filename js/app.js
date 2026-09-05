@@ -4,7 +4,7 @@
 
 import { state } from './state.js';
 import { DB } from './db.js';
-import { showDashboard, updateDocCounts } from './dashboard.js';
+import { showDashboard, setupDashboardEvents, updateDocCounts } from './dashboard.js';
 import { setupEditorEvents, setupDropdowns, setupShortcuts } from './editor-events.js';
 import { setupModals, createDocObject } from './documents.js';
 import { loadSettings } from './settings.js';

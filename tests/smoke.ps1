@@ -38,9 +38,9 @@ try {
   $outFile = Join-Path $env:TEMP 'td-smoke-dom.html'
   $errFile = Join-Path $env:TEMP 'td-smoke-err.txt'
 
-  $p = Start-Process -FilePath $chrome -ArgumentList $args_ `
+  Start-Process -FilePath $chrome -ArgumentList $args_ `
     -RedirectStandardOutput $outFile -RedirectStandardError $errFile `
-    -Wait -PassThru -NoNewWindow
+    -Wait -NoNewWindow
 
   $dom = [IO.File]::ReadAllText($outFile)
   $errText = [IO.File]::ReadAllText($errFile)
@@ -53,7 +53,7 @@ $rendered = $dom -match 'dash-doc-card' -and $dom -match 'id="btn-theme"'
 Write-Host '--- Smoke test results ---'
 if ($consoleErrors) {
   Write-Host 'Console errors:' -ForegroundColor Red
-  $consoleErrors | ForEach-Object { Write-Host $_.Line }
+  $consoleErrors | ForEach-Object { Write-Host $_ }
 } else {
   Write-Host 'Console errors: none' -ForegroundColor Green
 }

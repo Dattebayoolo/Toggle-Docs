@@ -1,4 +1,4 @@
-/* ===== View 1: Google Docs dashboard, template gallery, recent documents feed ===== */ 
+/* ==========================================================================
    VIEW 1: GOOGLE DOCS DASHBOARD / HOME (docs.google.com)
    ========================================================================== */
 .view-dashboard {
@@ -607,6 +607,7 @@
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 8;
+  line-clamp: 8;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -795,7 +796,3 @@
 .dash-fab:active {
   transform: scale(0.95);
 }
-
-
-/* ==========================================================================
-

@@ -571,3 +571,5 @@ if (document.readyState === 'loading') {
 } else {
   initEditor();
 }
+
+export { TDEditor as Editor };

@@ -10,8 +10,6 @@ $exports = @{
   'settings.js'     = @('toggleTheme','applyTheme','toggleLanguage','applyLanguage','loadSettings','saveSettings','applyResolvedAutoTheme')
   'app.js'          = @('initApp','createInitialWelcomeDoc','loadDocuments')
 }
-$downloadFile = @('downloadFile')  # internal helper, export not required
-
 $allNames = @()
 foreach ($k in $exports.Keys) { $allNames += $exports[$k] }
 $allNames += 'downloadFile'
@@ -102,6 +100,8 @@ export function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 '@
+[IO.File]::WriteAllText('js/state.js', $stateSrc, $enc)
+Write-Host 'state.js rewritten'
 # --- add exports to function declarations, then compute imports per module ---
 foreach ($f in $modules) {
   $c = [IO.File]::ReadAllText("js/$f")
@@ -127,9 +127,9 @@ foreach ($f in $modules) {
   $byModule = @{}
   foreach ($n in $needed) {
     if ($n -match '^(.+) as (.+)$') {
-      $src = $externals[$Matches[1]]; $local = $Matches[2]; $orig = $Matches[1]
+      $src = $externals[$Matches[1]]; $local = $Matches[2]
     } else {
-      $local = $n; $orig = $n
+      $local = $n
       if ($exports['documents.js'] -contains $n -or $n -eq 'downloadFile') { $src = './documents.js' }
       elseif ($exports['dashboard.js'] -contains $n) { $src = './dashboard.js' }
       elseif ($exports['editor-events.js'] -contains $n) { $src = './editor-events.js' }

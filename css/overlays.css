@@ -1,4 +1,4 @@
-/* ===== Shared overlays: Urdu keyboard, modals, context menu, toasts ===== */ 
+/* ==========================================================================
    SHARED OVERLAYS: URDU KEYBOARD, MODALS, CONTEXT MENU, TOASTS
    ========================================================================== */
 .gdocs-kb {
@@ -502,6 +502,3 @@ kbd {
   from { opacity: 1; transform: translateY(0); }
   to { opacity: 0; transform: translateY(12px); }
 }
-
-/* --------------------------------------------------------------------------
-

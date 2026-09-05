@@ -7,11 +7,11 @@ let dbPromise = null;
 function openDB() {
   if (dbPromise) return dbPromise;
   dbPromise = new Promise(function (resolve, reject) {
-    if (!global.indexedDB) {
+    if (!window.indexedDB) {
       reject(new Error('IndexedDB is not available in this browser.'));
       return;
     }
-    const req = global.indexedDB.open(DB_NAME, DB_VERSION);
+    const req = window.indexedDB.open(DB_NAME, DB_VERSION);
     req.onupgradeneeded = function () {
       const db = req.result;
       if (!db.objectStoreNames.contains('documents')) {
@@ -85,4 +85,4 @@ const DB = {    ready: openDB,
   }
 };
 
-export default DB;
+export { DB };
