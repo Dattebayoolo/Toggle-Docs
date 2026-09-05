@@ -226,6 +226,15 @@ export function handleMenuAction(action) {
     case 'about':
       showToast('Toggle Docs — Pakistan\'s Own Docs');
       break;
+    case 'account-manage':
+      showToast('Local account — stored entirely on this device');
+      break;
+    case 'account-add':
+      showToast('Toggle Docs is local-first: single device account');
+      break;
+    case 'account-signout':
+      showToast('Nothing to sign out of — your data lives on this device');
+      break;
   }
 }
 
