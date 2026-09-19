@@ -12,6 +12,7 @@ import { initCollab, setupShareEvents } from './collab.js';
 import { initCommandPalette } from './command-palette.js';
 import { initFindReplace } from './find-replace.js';
 import { initTableControls } from './tables.js';
+import { initAuthUi } from './auth.js';
 
 async function initApp() {
   try {
@@ -32,6 +33,7 @@ async function initApp() {
   initFindReplace();
   initTableControls();
   initSettingsModal();
+  initAuthUi();
 
   await loadDocuments();
 

@@ -271,7 +271,9 @@ export function handleMenuAction(action) {
       showToast('Toggle Docs is local-first: single device account');
       break;
     case 'account-signout':
-      showToast('Nothing to sign out of — your data lives on this device');
+      /* Handled here so it works regardless of how the menu is triggered:
+         clear local cookies, end the SSO session, and land on the login page. */
+      window.location.href = '/auth/logout';
       break;
   }
 }
